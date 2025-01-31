@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { useRef } from "react";
+import { Perf } from "r3f-perf";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Helper } from "@react-three/drei";
 
@@ -22,6 +23,7 @@ function App() {
   return (
     <main id="canvas-container">
       <Canvas>
+        <Perf position="top-left" showGraph={false} logsPerSecond={5} />
         <OrbitControls />
 
         <directionalLight position={[1, 2, 3]} intensity={3}>
