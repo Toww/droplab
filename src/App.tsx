@@ -1,10 +1,20 @@
 import * as THREE from "three";
 import { useRef } from "react";
 import { Perf } from "r3f-perf";
+import { useControls } from "leva";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Helper } from "@react-three/drei";
 
 function Box(): JSX.Element {
+  const { positionX } = useControls("Cube", {
+    positionX: {
+      value: 0,
+      min: -5,
+      max: 5,
+      step: 0.1,
+    },
+  });
+
   const boxRef = useRef<THREE.Mesh>(null!);
 
   useFrame((_, delta) => {
@@ -12,7 +22,7 @@ function Box(): JSX.Element {
   });
 
   return (
-    <mesh ref={boxRef}>
+    <mesh ref={boxRef} position-x={positionX}>
       <boxGeometry />
       <meshStandardMaterial color="white" />
     </mesh>
