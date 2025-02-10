@@ -6,6 +6,7 @@ import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 // Shaders
 import stickerVertexShader from "../shaders/sticker/vertex.glsl";
 import stickerFragmentShader from "../shaders/sticker/fragment.glsl";
+import { useGSAP } from "@gsap/react";
 
 export default function Sticker() {
   // Leva
@@ -32,11 +33,13 @@ export default function Sticker() {
   headTexture.repeat.set(1 / 12, 1);
 
   // GSAP
-  gsap.to(headTexture.offset, {
-    x: 11 / 12,
-    duration: 0.75,
-    ease: "steps(11)",
-    repeat: -1,
+  useGSAP(() => {
+    gsap.to(headTexture.offset, {
+      x: 11 / 12,
+      duration: 0.75,
+      ease: "steps(11)",
+      repeat: -1,
+    });
   });
 
   // Uniforms
