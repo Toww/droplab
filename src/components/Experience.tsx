@@ -1,22 +1,15 @@
-import { useRef } from "react";
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import Sticker from "./Sticker";
 
 export default function Experience() {
-  // Refs
-  const cubeRef = useRef<THREE.Mesh>(null);
-
-  // Hooks
-  useFrame((_, delta) => {
-    if (cubeRef.current) {
-      cubeRef.current.rotation.y += delta;
-    }
-  });
-
   return (
-    <mesh ref={cubeRef}>
-      <boxGeometry />
-      <meshStandardMaterial />
-    </mesh>
+    <>
+      <Sticker />
+
+      {/* Floor */}
+      <mesh rotation={[Math.PI / 2, 0, 0]} receiveShadow position={[0, -2, 0]}>
+        <boxGeometry args={[10, 10, 0.5]} />
+        <meshStandardMaterial color="yellowgreen" />
+      </mesh>
+    </>
   );
 }
