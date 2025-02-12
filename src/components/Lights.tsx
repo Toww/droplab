@@ -5,7 +5,7 @@ import { Helper } from "@react-three/drei";
 export default function Lights() {
   // Leva
   const { lightsPosition } = useControls("Lights", {
-    lightsPosition: [1, 1, 1],
+    lightsPosition: [0, 3, 0],
   });
 
   return (

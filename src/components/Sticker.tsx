@@ -81,8 +81,8 @@ export default function Sticker() {
       <mesh
         castShadow
         receiveShadow
-        rotation={[0, 0, 0]}
-        position={[-1, 0, -0.03]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, 0, 0]}
         material={stickerMaterial}
         customDepthMaterial={stickerDepthmaterial}
       >
