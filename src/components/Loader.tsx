@@ -1,21 +1,90 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import { addEffect } from "@react-three/fiber";
+
+import useAppStore from "../stores/useAppStore";
 
 export default function Loader() {
   // Refs
+  const timeRef = useRef<HTMLDivElement>(null!);
   const loaderContainerRef = useRef<HTMLDivElement>(null);
 
+  // Hooks
+  const { contextSafe } = useGSAP(() => {}, { scope: loaderContainerRef });
+
+  // Noise animation
   useGSAP(
     () => {
-      const tl = gsap.timeline({ repeat: -1, repeatDelay: 0, yoyo: false });
-      tl.to(".noise", { xPercent: -15, yPercent: -20, ease: "steps(8)" });
+      gsap.to(".noise", {
+        xPercent: -15,
+        yPercent: -20,
+        ease: "steps(8)",
+        repeat: -1,
+      });
     },
     { scope: loaderContainerRef }
   );
 
+  // Handlers
+  const handleLoadingEnd = contextSafe(() => {
+    gsap.to(".loader-bg", {
+      opacity: 0,
+      duration: 1,
+    });
+    gsap.to(".noise", {
+      opacity: 0,
+      duration: 1,
+    });
+  });
+
+  // Effects
+  useEffect(() => {
+    const appStore = useAppStore.getState();
+    appStore.startLoading();
+
+    // Faking loading for development purpose
+    // -----
+    // TODO - Implement real loading state once the rest of the app is ready.
+    // TODO - Clean store / state change logic
+    // -----
+    const startTime = Date.now();
+    let elapsedTime = 0;
+    const finishTime = 3; // Finish time in seconds
+    let hasLoaded = false;
+
+    const unsubPhase = useAppStore.subscribe(
+      (state) => state.phase,
+      () => {
+        hasLoaded = true;
+        handleLoadingEnd();
+      }
+    );
+
+    // Effects in sync with useFrame
+    const unsubEffect = addEffect(() => {
+      elapsedTime = (Date.now() - startTime) / 1000; // elapsedTime in seconds
+
+      if (elapsedTime > finishTime && !hasLoaded) {
+        timeRef.current.textContent = "Loaded !";
+        appStore.endLoading();
+      } else if (elapsedTime < finishTime) {
+        timeRef.current.textContent = `${Math.round(elapsedTime * 10)}%`;
+      }
+    });
+
+    return () => {
+      unsubEffect();
+      unsubPhase();
+      elapsedTime = 0;
+    };
+  }, []);
+
   return (
     <>
+      <div ref={timeRef} className="time">
+        0.00
+      </div>
       <div className="loader-container" ref={loaderContainerRef}>
         <div className="loader-bg">
           <div className="noise"></div>

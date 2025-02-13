@@ -1,12 +1,12 @@
 import gsap from "gsap";
 import * as THREE from "three";
 import { useControls } from "leva";
+import { useGSAP } from "@gsap/react";
 import { useFrame } from "@react-three/fiber";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
-// Shaders
+
 import stickerVertexShader from "../shaders/sticker/vertex.glsl";
 import stickerFragmentShader from "../shaders/sticker/fragment.glsl";
-import { useGSAP } from "@gsap/react";
 
 export default function Sticker() {
   // Leva
@@ -49,12 +49,6 @@ export default function Sticker() {
     uLoadingProgress: new THREE.Uniform(uLoadingProgress),
   };
 
-  // Animation
-  useFrame((state) => {
-    const { clock } = state;
-    uniforms.uTime.value = clock.getElapsedTime();
-  });
-
   // Materials
   const stickerMaterial = new CustomShaderMaterial({
     // CustomShaderMaterial
@@ -74,6 +68,17 @@ export default function Sticker() {
     uniforms: uniforms,
     vertexShader: stickerVertexShader,
     depthPacking: THREE.RGBADepthPacking,
+  });
+
+  // Animation
+  useFrame((state) => {
+    const { clock } = state;
+    uniforms.uTime.value = clock.getElapsedTime();
+    // -----
+    // TODO - Implement real loading progress
+    // For now this is just a simulation with a value that isn't accurate
+    // -----
+    uniforms.uLoadingProgress.value += 0.0017;
   });
 
   return (
