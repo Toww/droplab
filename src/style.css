@@ -10,7 +10,7 @@
 /* CSS styles */
 #canvas-container {
   position: fixed;
-  background: rgb(26,25,25);
+  background: white;
   top:0;
   left: 0;
   width: 100vw;
@@ -19,6 +19,7 @@
 
 .loader-container {
   display: block;
+  background-color: rgb(11,10,10);
   width: 100vw;
   height: 100vh;
   padding: 12px;
@@ -38,13 +39,14 @@
 }
 
 .noise {
-  background-color: transparent;
+  background-color: black;
   display: block;
   width: 130%;
   height: 130%;
   border-radius: 12px;
-  opacity: 0.7;
+  opacity: 0.2;
   background-image: url(/noise.svg);
+  mix-blend-mode: hard-light;
 }
 
 /* TODO - Delete once real loading is implemented */

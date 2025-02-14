@@ -8,10 +8,10 @@ import useAppStore from "../stores/useAppStore";
 export default function Loader() {
   // Refs
   const timeRef = useRef<HTMLDivElement>(null!);
-  const loaderContainerRef = useRef<HTMLDivElement>(null);
+  const loaderRef = useRef<HTMLDivElement>(null);
 
   // Hooks
-  const { contextSafe } = useGSAP(() => {}, { scope: loaderContainerRef });
+  const { contextSafe } = useGSAP(() => {}, { scope: loaderRef });
 
   // Noise animation
   useGSAP(
@@ -23,7 +23,7 @@ export default function Loader() {
         repeat: -1,
       });
     },
-    { scope: loaderContainerRef }
+    { scope: loaderRef }
   );
 
   // Handlers
@@ -35,6 +35,10 @@ export default function Loader() {
     gsap.to(".noise", {
       opacity: 0,
       duration: 1,
+    });
+    gsap.to(".loader-container", {
+      opacity: 0,
+      duration: 0.5,
     });
   });
 
@@ -85,9 +89,11 @@ export default function Loader() {
       <div ref={timeRef} className="time">
         0.00
       </div>
-      <div className="loader-container" ref={loaderContainerRef}>
-        <div className="loader-bg">
-          <div className="noise"></div>
+      <div ref={loaderRef}>
+        <div className="loader-container">
+          <div className="loader-bg">
+            <div className="noise"></div>
+          </div>
         </div>
       </div>
     </>

@@ -32,7 +32,7 @@ export default function Sticker() {
   headTexture.minFilter = THREE.NearestFilter;
   headTexture.repeat.set(1 / 12, 1);
 
-  // GSAP
+  // Head animation
   useGSAP(() => {
     gsap.to(headTexture.offset, {
       x: 11 / 12,
@@ -76,9 +76,8 @@ export default function Sticker() {
     uniforms.uTime.value = clock.getElapsedTime();
     // -----
     // TODO - Implement real loading progress
-    // For now this is just a simulation with a value that isn't accurate
     // -----
-    uniforms.uLoadingProgress.value += 0.0017;
+    uniforms.uLoadingProgress.value += 0.002;
   });
 
   return (
