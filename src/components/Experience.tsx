@@ -1,13 +1,20 @@
-import { useRef, useEffect } from "react";
-import { OrbitControls, CameraControls } from "@react-three/drei";
+import { useRef, useState, useEffect } from "react";
+import { OrbitControls, CameraControls, Float } from "@react-three/drei";
 
 import Lights from "./Lights";
 import Sticker from "./Sticker";
+import Projects from "./Projects";
 import useAppStore from "../stores/useAppStore";
 
 export default function Experience() {
   // Refs
   const cameraControlsRef = useRef<CameraControls>(null);
+
+  // State
+  const [isFloating, setIsFloating] = useState<boolean>(false);
+
+  // Store variables
+  const cameraPosition = useAppStore((state) => state.cameraPosition);
 
   // Effects
   useEffect(() => {
@@ -15,7 +22,10 @@ export default function Experience() {
       (state) => state.phase,
       (phase) => {
         if (phase === "ready") {
-          cameraControlsRef.current?.setPosition(0, 0, 5, true);
+          const { x, y, z } = cameraPosition.loadingEnd;
+          cameraControlsRef.current?.setPosition(x, y, z, true);
+
+          setIsFloating(true);
         }
       }
     );
@@ -30,7 +40,14 @@ export default function Experience() {
       <CameraControls ref={cameraControlsRef} />
       <OrbitControls />
       <Lights />
-      <Sticker />
+      <Float
+        rotationIntensity={25}
+        speed={isFloating ? 5 : 0}
+        floatingRange={[-1.5, 1.5]}
+      >
+        <Sticker />
+      </Float>
+      <Projects />
     </>
   );
 }

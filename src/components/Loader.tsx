@@ -54,7 +54,7 @@ export default function Loader() {
     // -----
     const startTime = Date.now();
     let elapsedTime = 0;
-    const finishTime = 3; // Finish time in seconds
+    const finishTime = 0.1; // Finish time in seconds
     let hasLoaded = false;
 
     const unsubPhase = useAppStore.subscribe(

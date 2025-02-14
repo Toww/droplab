@@ -4,8 +4,9 @@ import { Helper } from "@react-three/drei";
 
 export default function Lights() {
   // Leva
-  const { lightsPosition } = useControls("Lights", {
+  const { lightsPosition, showHelper } = useControls("Lights", {
     lightsPosition: [0, 3, 0],
+    showHelper: false,
   });
 
   return (
@@ -16,7 +17,7 @@ export default function Lights() {
         shadow-normalBias={0.3}
         position={lightsPosition}
       >
-        <Helper type={THREE.DirectionalLightHelper} />
+        {showHelper && <Helper type={THREE.DirectionalLightHelper} />}
       </directionalLight>
 
       <ambientLight intensity={0.2} />

@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import { memo } from "react";
 import * as THREE from "three";
 import { useControls } from "leva";
 import { useGSAP } from "@gsap/react";
@@ -8,7 +9,7 @@ import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 import stickerVertexShader from "../shaders/sticker/vertex.glsl";
 import stickerFragmentShader from "../shaders/sticker/fragment.glsl";
 
-export default function Sticker() {
+const Sticker = memo(() => {
   // Leva
   const { uLoadingProgress, uWobbleFactor } = useControls("Sticker", {
     uLoadingProgress: {
@@ -94,4 +95,6 @@ export default function Sticker() {
       </mesh>
     </>
   );
-}
+});
+
+export default Sticker;
