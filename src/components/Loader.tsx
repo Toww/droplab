@@ -28,18 +28,26 @@ export default function Loader() {
 
   // Handlers
   const handleLoadingEnd = contextSafe(() => {
-    gsap.to(".loader-bg", {
+    const tl = gsap.timeline();
+    tl.to(".noise", {
       opacity: 0,
       duration: 1,
     });
-    gsap.to(".noise", {
-      opacity: 0,
+    tl.to(".loader-container", {
+      // opacity: 1,
+      padding: 0,
       duration: 1,
+      ease: "power2.out",
     });
-    gsap.to(".loader-container", {
-      opacity: 0,
-      duration: 0.5,
-    });
+    tl.to(
+      ".loader-bg",
+      {
+        borderRadius: 0,
+        duration: 1,
+        ease: "power2.out",
+      },
+      "<"
+    );
   });
 
   // Effects
