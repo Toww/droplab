@@ -78,7 +78,7 @@ export default function Loader() {
       elapsedTime = (Date.now() - startTime) / 1000; // elapsedTime in seconds
 
       if (elapsedTime > finishTime && !hasLoaded) {
-        timeRef.current.textContent = "Loaded !";
+        timeRef.current.textContent = "";
         appStore.endLoading();
       } else if (elapsedTime < finishTime) {
         timeRef.current.textContent = `${Math.round(elapsedTime * 10)}%`;
