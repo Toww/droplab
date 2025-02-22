@@ -9,23 +9,23 @@
 
 /* CSS styles */
 #canvas-container {
-  position: fixed;
-  background: white;
   top:0;
   left: 0;
   width: 100vw;
   height: 100vh;
+  position: fixed;
+  background: white;
 }
 
 .loader-container {
   display: block;
-  background-color: rgb(11,10,10);
+  position: fixed;
   width: 100vw;
   height: 100vh;
-  padding: 12px;
-  position: fixed;
   top: 0;
   left: 0;
+  padding: 12px;
+  background-color: rgb(11,10,10);
   z-index: -10000;
 }
 
@@ -33,27 +33,47 @@
   display: block;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   border-radius: 32px;
   background-color: white;
-  overflow: hidden;
+  background-image: url(./noise.svg);
+  animation-timing-function: steps(20);
+  animation: noise-animation 0.5s infinite;
+  filter: grayscale(100%);
 }
 
-.noise {
-  background-color: black;
-  display: block;
-  width: 130%;
-  height: 130%;
-  opacity: 0.3;
-  background-image: url(/noise.svg);
-  mix-blend-mode: hard-light;
-}
-
-/* TODO - Delete once real loading is implemented */
-.time {
-  display:block;
-  position: absolute;
-  top: 30%;
-  width:100%;
-  text-align: center;
-  z-index: 10000;
+@keyframes noise-animation {
+  0% {
+    background-position: 0 0;
+  }
+  10% {
+    background-position: -100px 100px;
+  }
+  20% {
+    background-position: 150px -100px;
+  }
+  30% {
+    background-position: -100px 100px;
+  }
+  40% {
+    background-position: 100px -150px;
+  }
+  50% {
+    background-position: -100px 200px;
+  }
+  60% {
+    background-position: -200px -100px;
+  }
+  70% {
+    background-position: 50px 100px;
+  }
+  80% {
+    background-position: 100px -150px;
+  }
+  90% {
+    background-position: 0px 200px;
+  }
+  100% {
+    background-position: -100px 100px;
+  }
 }

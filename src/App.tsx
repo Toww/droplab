@@ -1,15 +1,20 @@
+import { gsap } from "gsap";
 import { Perf } from "r3f-perf";
 import { useControls } from "leva";
+import { useGSAP } from "@gsap/react";
 import { Canvas } from "@react-three/fiber";
 
-import Loader from "./components/Loader";
 import Debug from "./components/Debug";
+import Loader from "./components/Loader";
 import useAppStore from "./stores/useAppStore";
 import Experience from "./components/Experience";
 
 function App() {
+  // GSAP Plugins
+  gsap.registerPlugin(useGSAP);
+
   // Leva
-  const { showPerf } = useControls("Perf", { showPerf: true });
+  const { showPerf } = useControls("Perf", { showPerf: false });
 
   // Store variables
   const cameraPosition = useAppStore((state) => state.cameraPosition);

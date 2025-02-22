@@ -1,7 +1,8 @@
+import { gsap } from "gsap";
 import * as THREE from "three";
-import { useControls } from "leva";
-import { useRef, useEffect } from "react";
-import { OrbitControls, CameraControls } from "@react-three/drei";
+import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
+import { OrbitControls } from "@react-three/drei";
 
 import Lights from "./Lights";
 import Sticker from "./Sticker";
@@ -10,53 +11,45 @@ import useAppStore from "../stores/useAppStore";
 
 export default function Experience() {
   // Refs
-  const cameraControlsRef = useRef<CameraControls>(null);
-  const stickerRef = useRef<THREE.Mesh>(null!);
+  const floorMaterialRef = useRef<THREE.MeshStandardMaterial>(null);
 
   // Store variables
-  const cameraPosition = useAppStore((state) => state.cameraPosition);
+  const phase = useAppStore((state) => state.phase);
 
   // Leva
-  const { fogNear, fogFar } = useControls("Fog", {
-    fogNear: 1,
-    fogFar: 10,
-  });
+  // const { fogNear, fogFar } = useControls("Fog", {
+  //   fogNear: 1,
+  //   fogFar: 10,
+  // });
 
-  // Effects
-  useEffect(() => {
-    const unsubAppStore = useAppStore.subscribe(
-      (state) => state.phase,
-      (phase) => {
-        if (phase === "ready") {
-          const { x, y, z } = cameraPosition.loadingEnd;
-          cameraControlsRef.current?.setPosition(x, y, z, true);
-        }
+  // GSAP
+  useGSAP(
+    () => {
+      if (phase === "ready") {
+        gsap.to(floorMaterialRef.current, { opacity: 1, duration: 2 });
       }
-    );
-
-    return () => {
-      unsubAppStore();
-    };
-  }, []);
+    },
+    { dependencies: [phase] }
+  );
 
   return (
     <>
-      <fog attach="fog" color="white" near={fogNear} far={fogFar} />
-      <CameraControls ref={cameraControlsRef} />
+      {/* <fog attach="fog" color="white" near={fogNear} far={fogFar} /> */}
       <OrbitControls />
       <Lights />
 
-      <Sticker ref={stickerRef} />
+      <Sticker />
       <Projects />
-
-      {/* ----- Setup ------ */}
-      {/* Clouds */}
-      {/* <Cloud opacity={0.2} color="black" bounds={[5, 5, 1]} position={[0, 0, -1]} /> */}
 
       {/* Floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -5, -10]}>
         <planeGeometry args={[200, 200]} />
-        <meshStandardMaterial color="rgb(209, 209, 209)" />
+        <meshStandardMaterial
+          ref={floorMaterialRef}
+          color="rgb(209, 209, 209)"
+          opacity={0.0}
+          transparent
+        />
       </mesh>
     </>
   );

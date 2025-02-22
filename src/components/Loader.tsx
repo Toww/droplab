@@ -7,43 +7,25 @@ import useAppStore from "../stores/useAppStore";
 
 export default function Loader() {
   // Refs
-  const timeRef = useRef<HTMLDivElement>(null!);
   const loaderRef = useRef<HTMLDivElement>(null);
 
   // Hooks
   const { contextSafe } = useGSAP(() => {}, { scope: loaderRef });
 
-  // Noise animation
-  useGSAP(
-    () => {
-      gsap.to(".noise", {
-        xPercent: -15,
-        yPercent: -20,
-        ease: "steps(8)",
-        repeat: -1,
-      });
-    },
-    { scope: loaderRef }
-  );
-
   // Handlers
   const handleLoadingEnd = contextSafe(() => {
     const tl = gsap.timeline();
-    tl.to(".noise", {
-      opacity: 0,
-      duration: 1,
-    });
     tl.to(".loader-container", {
-      // opacity: 1,
       padding: 0,
-      duration: 1,
+      duration: 2,
       ease: "power2.out",
     });
     tl.to(
       ".loader-bg",
       {
         borderRadius: 0,
-        duration: 1,
+        duration: 2,
+        opacity: 0,
         ease: "power2.out",
       },
       "<"
@@ -58,18 +40,17 @@ export default function Loader() {
     // Faking loading for development purpose
     // -----
     // TODO - Implement real loading state once the rest of the app is ready.
-    // TODO - Clean store / state change logic
     // -----
     const startTime = Date.now();
     let elapsedTime = 0;
-    const finishTime = 0.1; // Finish time in seconds
-    let hasLoaded = false;
+    const finishTime = 2; // Finish time in seconds
 
     const unsubPhase = useAppStore.subscribe(
       (state) => state.phase,
-      () => {
-        hasLoaded = true;
-        handleLoadingEnd();
+      (phase) => {
+        if (phase === "ready") {
+          handleLoadingEnd();
+        }
       }
     );
 
@@ -77,11 +58,8 @@ export default function Loader() {
     const unsubEffect = addEffect(() => {
       elapsedTime = (Date.now() - startTime) / 1000; // elapsedTime in seconds
 
-      if (elapsedTime > finishTime && !hasLoaded) {
-        timeRef.current.textContent = "";
+      if (elapsedTime > finishTime) {
         appStore.endLoading();
-      } else if (elapsedTime < finishTime) {
-        timeRef.current.textContent = `${Math.round(elapsedTime * 10)}%`;
       }
     });
 
@@ -93,17 +71,10 @@ export default function Loader() {
   }, []);
 
   return (
-    <>
-      <div ref={timeRef} className="time">
-        0.00
+    <div ref={loaderRef}>
+      <div className="loader-container">
+        <div className="loader-bg"></div>
       </div>
-      <div ref={loaderRef}>
-        <div className="loader-container">
-          <div className="loader-bg">
-            <div className="noise"></div>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
