@@ -1,7 +1,11 @@
-import { Leva } from "leva";
+import { Leva, useControls } from "leva";
 import { useState, useEffect } from "react";
 
-export default function Debug() {
+type TProps = {
+  setShowPerf: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function Debug({ setShowPerf }: TProps) {
   // States
   const [showDebug, setShowDebug] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
@@ -17,12 +21,20 @@ export default function Debug() {
     // can be wrong (https://github.com/pmndrs/leva/issues/456)
     const timeoutID = setTimeout(() => {
       setIsCollapsed(false);
-    }, 0);
+    }, 100);
 
     return () => {
       clearTimeout(timeoutID);
     };
   }, [window.location.hash]);
+
+  // Leva
+  useControls("Performances", {
+    showPerf: {
+      value: false,
+      onChange: (value) => setShowPerf(value),
+    },
+  });
 
   return (
     <Leva

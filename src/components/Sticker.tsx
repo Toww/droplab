@@ -4,10 +4,9 @@ import { useControls } from "leva";
 import { useGSAP } from "@gsap/react";
 import { Float } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import useAppStore from "../stores/useAppStore";
 import { memo, useState, useEffect } from "react";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
-
+import useAppStore from "../stores/useAppStore";
 import stickerVertexShader from "../shaders/sticker/vertex.glsl";
 import stickerFragmentShader from "../shaders/sticker/fragment.glsl";
 
@@ -64,7 +63,7 @@ const StickerMesh = memo(() => {
     fragmentShader: stickerFragmentShader,
   });
 
-  const stickerDepthmaterial = new CustomShaderMaterial({
+  const stickerDepthMaterial = new CustomShaderMaterial({
     // CustomShaderMaterial
     baseMaterial: THREE.MeshDepthMaterial,
     // MeshDepthMaterial
@@ -90,7 +89,7 @@ const StickerMesh = memo(() => {
       rotation={[-Math.PI / 2, 0, 0]}
       position={[0, 0, 0]}
       material={stickerMaterial}
-      customDepthMaterial={stickerDepthmaterial}
+      customDepthMaterial={stickerDepthMaterial}
     >
       <circleGeometry args={[1, 64]} />
     </mesh>
