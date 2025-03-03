@@ -15,7 +15,7 @@ export default function Experience() {
     <>
       <OrbitControls />
       <Lights />
-      <Fog />
+      {/* <Fog /> */}
 
       <Sticker />
       <Projects />

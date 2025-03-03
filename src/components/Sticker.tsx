@@ -82,6 +82,10 @@ const StickerMesh = memo(() => {
     uniforms.uLoadingProgress.value += 0.002;
   });
 
+  // -----
+  // TODO  Soften Sticker Floating start animation
+  // -----
+
   return (
     <mesh
       castShadow

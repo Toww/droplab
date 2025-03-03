@@ -13,20 +13,31 @@ export default function Loader() {
     () => {
       if (phase === "ready") {
         const tl = gsap.timeline();
-        tl.to(".loader-container", {
-          padding: 0,
-          duration: 2,
-          ease: "power2.out",
-        });
+        tl.to(
+          ".loader-container",
+          {
+            padding: 0,
+            duration: 1,
+            ease: "power1.out",
+          },
+          0
+        );
         tl.to(
           ".loader",
           {
             borderRadius: 0,
-            duration: 2,
-            opacity: 0,
-            ease: "power2.out",
+            duration: 1,
+            ease: "power1.out",
           },
           "<"
+        );
+        tl.to(
+          ".loader-container",
+          {
+            opacity: 0,
+            duration: 0.5,
+          },
+          ">"
         );
       }
     },
