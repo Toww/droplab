@@ -4,11 +4,15 @@ import { useControls } from "leva";
 import { useGSAP } from "@gsap/react";
 import { Float } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect, Ref } from "react";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 import useAppStore from "../stores/useAppStore";
 import stickerVertexShader from "../shaders/sticker/vertex.glsl";
 import stickerFragmentShader from "../shaders/sticker/fragment.glsl";
+
+type TProps = {
+  ref: Ref<THREE.Group>;
+};
 
 const StickerMesh = memo(() => {
   // Leva
@@ -100,7 +104,7 @@ const StickerMesh = memo(() => {
   );
 });
 
-export default function Sticker() {
+export default function Sticker({ ref }: TProps) {
   // States
   const [isFloating, setIsFloating] = useState<boolean>(false);
 
@@ -121,12 +125,15 @@ export default function Sticker() {
   });
 
   return (
-    <Float
-      rotationIntensity={12}
-      speed={isFloating ? 5 : 0}
-      floatingRange={[-1.5, 1.5]}
-    >
-      <StickerMesh />
-    </Float>
+    <group ref={ref}>
+      <Float
+        floatIntensity={1}
+        rotationIntensity={15}
+        floatingRange={[-1, 1]}
+        speed={isFloating ? 10 : 0}
+      >
+        <StickerMesh />
+      </Float>
+    </group>
   );
 }

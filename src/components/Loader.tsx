@@ -57,7 +57,6 @@ export default function Loader() {
     let elapsedTime = 0;
     const finishTime = 2; // Finish time in seconds
 
-    // Effects in sync with useFrame - Handling loading progress and end
     const unsubEffect = addEffect(() => {
       elapsedTime = (Date.now() - startTime) / 1000; // elapsedTime in seconds
 

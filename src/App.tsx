@@ -5,7 +5,6 @@ import { useGSAP } from "@gsap/react";
 import { Canvas } from "@react-three/fiber";
 import Debug from "./components/Debug";
 import Loader from "./components/Loader";
-import useAppStore from "./stores/useAppStore";
 import Experience from "./components/Experience";
 
 function App() {
@@ -16,13 +15,11 @@ function App() {
   const [showPerf, setShowPerf] = useState<boolean>(false);
 
   // Store variables
-  const cameraPosition = useAppStore((state) => state.cameraPosition);
-
   return (
     <>
       <main id="canvas-container">
         <Debug setShowPerf={setShowPerf} />
-        <Canvas camera={{ position: cameraPosition.initial }} shadows>
+        <Canvas shadows>
           {showPerf && (
             <Perf position="top-left" showGraph={false} logsPerSecond={5} />
           )}

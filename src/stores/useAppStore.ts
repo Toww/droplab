@@ -4,10 +4,6 @@ import { subscribeWithSelector } from 'zustand/middleware'
 
 type AppStoreState = {
   phase: "loading" | "ready" | null;
-  cameraPosition: {
-    initial: THREE.Vector3,
-    loadingEnd: THREE.Vector3,
-  }
 };
 
 type AppStoreActions = {
@@ -17,10 +13,6 @@ type AppStoreActions = {
 
 export default create<AppStoreState & AppStoreActions>()(subscribeWithSelector((set) => ({
   phase: null,
-  cameraPosition: {
-    initial: new THREE.Vector3(0,5,0),
-    loadingEnd: new THREE.Vector3(0,0,5)
-  },
   startLoading: () =>
     set((state) => {
       if (state.phase === null) {

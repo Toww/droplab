@@ -2,25 +2,29 @@ import * as THREE from "three";
 import { useRef } from "react";
 import { OrbitControls } from "@react-three/drei";
 import Fog from "./Fog";
-import Floor from "./Floor";
+import Clouds from "./Clouds";
 import Lights from "./Lights";
 import Sticker from "./Sticker";
 import Projects from "./Projects";
+import MotionPaths from "./MotionPaths";
 
 export default function Experience() {
-  // Refs
-  const floorMaterialRef = useRef<THREE.MeshStandardMaterial>(null);
+  // Refsch
+  const stickerRef = useRef<THREE.Group>(null!);
+  const projectsRef = useRef<THREE.Group>(null!);
 
   return (
     <>
       <OrbitControls />
       <Lights />
-      {/* <Fog /> */}
 
-      <Sticker />
-      <Projects />
+      <Clouds />
+      <Fog near={2} far={25} />
 
-      <Floor ref={floorMaterialRef} />
+      <MotionPaths stickerRef={stickerRef} projectsRef={projectsRef} />
+
+      <Sticker ref={stickerRef} />
+      <Projects ref={projectsRef} />
     </>
   );
 }

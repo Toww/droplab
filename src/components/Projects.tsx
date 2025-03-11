@@ -1,8 +1,18 @@
-export default function Projects() {
+import { Ref } from "react";
+import * as THREE from "three";
+import { Group } from "three/examples/jsm/libs/tween.module.js";
+
+type TProps = {
+  ref: Ref<THREE.Group>;
+};
+
+export default function Projects({ ref }: TProps) {
   return (
-    <mesh position={[-8, 0, -15]}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="pink" />
-    </mesh>
+    <group ref={ref} position={[-10, 0, -20]}>
+      <mesh>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color="pink" />
+      </mesh>
+    </group>
   );
 }
