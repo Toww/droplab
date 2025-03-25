@@ -55,7 +55,7 @@ export default function Loader() {
     // -----
     const startTime = Date.now();
     let elapsedTime = 0;
-    const finishTime = 2; // Finish time in seconds
+    const finishTime = 3.2; // Finish time in seconds
 
     const unsubEffect = addEffect(() => {
       elapsedTime = (Date.now() - startTime) / 1000; // elapsedTime in seconds

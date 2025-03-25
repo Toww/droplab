@@ -8,7 +8,7 @@ type TProps = {
 
 export default function Projects({ ref }: TProps) {
   return (
-    <group ref={ref} position={[-10, 0, -20]}>
+    <group ref={ref} position={[0, 0, -50]}>
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="pink" />
