@@ -4,14 +4,13 @@ import { useControls } from "leva";
 import { useGSAP } from "@gsap/react";
 import { Float } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { memo, useState, useEffect, Ref } from "react";
+import { memo, RefObject } from "react";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
-import useAppStore from "../stores/useAppStore";
 import stickerVertexShader from "../shaders/sticker/vertex.glsl";
 import stickerFragmentShader from "../shaders/sticker/fragment.glsl";
 
 type TProps = {
-  ref: Ref<THREE.Group>;
+  ref: RefObject<THREE.Group>;
 };
 
 const StickerMesh = memo(() => {
@@ -57,9 +56,9 @@ const StickerMesh = memo(() => {
 
   // Materials
   const stickerMaterial = new CustomShaderMaterial({
-    // CustomShaderMaterial
+    // CustomShaderMaterial props
     baseMaterial: THREE.MeshStandardMaterial,
-    // MeshStandardMaterial
+    // MeshStandardMaterial props
     map: headTexture,
     uniforms: uniforms,
     side: THREE.DoubleSide,
@@ -68,9 +67,9 @@ const StickerMesh = memo(() => {
   });
 
   const stickerDepthMaterial = new CustomShaderMaterial({
-    // CustomShaderMaterial
+    // CustomShaderMaterial props
     baseMaterial: THREE.MeshDepthMaterial,
-    // MeshDepthMaterial
+    // MeshDepthMaterial props
     uniforms: uniforms,
     vertexShader: stickerVertexShader,
     depthPacking: THREE.RGBADepthPacking,
@@ -94,43 +93,58 @@ const StickerMesh = memo(() => {
     <mesh
       castShadow
       receiveShadow
-      rotation={[-Math.PI / 2, 0, 0]}
-      position={[0, 0, 0]}
       material={stickerMaterial}
       customDepthMaterial={stickerDepthMaterial}
     >
-      <circleGeometry args={[1, 64]} />
+      <circleGeometry args={[0.7, 64]} />
     </mesh>
   );
 });
 
-export default function Sticker({ ref }: TProps) {
-  // States
-  const [isFloating, setIsFloating] = useState<boolean>(false);
+export default function Sticker({ ref: stickerRef }: TProps) {
+  // Leva
+  const { floatSpeed, floatRotationIntensity, floatingRange } = useControls(
+    "Sticker",
+    {
+      floatSpeed: {
+        value: 8,
+        min: 0,
+        max: 15,
+        step: 0.01,
+      },
+      floatRotationIntensity: {
+        value: 7,
+        min: 0,
+        max: 25,
+        step: 0.01,
+      },
+      floatingRange: [-0.7, 0.7],
+    },
+  );
 
-  // Effects
-  useEffect(() => {
-    const unsubAppStore = useAppStore.subscribe(
-      (state) => state.phase,
-      (phase) => {
-        if (phase === "ready") {
-          setIsFloating(true);
-        }
-      }
-    );
+  // Mouse movement
+  useFrame((state) => {
+    const { pointer, viewport } = state;
 
-    return () => {
-      unsubAppStore();
-    };
+    const stickerX = (pointer.x * viewport.width) / 2;
+    const stickerY = (pointer.y * viewport.height) / 2;
+
+    gsap.to(stickerRef.current.position, {
+      x: stickerX,
+      y: stickerY,
+      duration: 0.2,
+      ease: "power2.out",
+      overwrite: true,
+    });
   });
 
   return (
-    <group ref={ref}>
+    <group ref={stickerRef}>
       <Float
         floatIntensity={1}
-        rotationIntensity={15}
-        floatingRange={[-1, 1]}
-        speed={isFloating ? 10 : 0}
+        rotationIntensity={floatRotationIntensity}
+        floatingRange={floatingRange}
+        speed={floatSpeed}
       >
         <StickerMesh />
       </Float>
