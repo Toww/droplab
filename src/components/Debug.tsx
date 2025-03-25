@@ -2,10 +2,11 @@ import { Leva, useControls } from "leva";
 import { useState, useEffect } from "react";
 
 type TProps = {
+  showPerf: boolean;
   setShowPerf: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function Debug({ setShowPerf }: TProps) {
+export default function Debug({ showPerf, setShowPerf }: TProps) {
   // States
   const [showDebug, setShowDebug] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
@@ -31,7 +32,7 @@ export default function Debug({ setShowPerf }: TProps) {
   // Leva
   useControls("Performances", {
     showPerf: {
-      value: false,
+      value: showPerf,
       onChange: (value) => setShowPerf(value),
     },
   });

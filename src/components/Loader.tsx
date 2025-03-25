@@ -1,48 +1,10 @@
-import gsap from "gsap";
 import { useEffect } from "react";
-import { useGSAP } from "@gsap/react";
 import { addEffect } from "@react-three/fiber";
 import useAppStore from "../stores/useAppStore";
 
 export default function Loader() {
   // Store variables
   const phase = useAppStore((state) => state.phase);
-
-  // GSAP
-  useGSAP(
-    () => {
-      if (phase === "ready") {
-        const tl = gsap.timeline();
-        tl.to(
-          ".loader-container",
-          {
-            padding: 0,
-            duration: 1,
-            ease: "power1.out",
-          },
-          0
-        );
-        tl.to(
-          ".loader",
-          {
-            borderRadius: 0,
-            duration: 1,
-            ease: "power1.out",
-          },
-          "<"
-        );
-        tl.to(
-          ".loader-container",
-          {
-            opacity: 0,
-            duration: 0.5,
-          },
-          ">"
-        );
-      }
-    },
-    { dependencies: [phase] }
-  );
 
   // Effects
   useEffect(() => {
@@ -71,9 +33,5 @@ export default function Loader() {
     };
   }, []);
 
-  return (
-    <div className="loader-container">
-      <div className="loader"></div>
-    </div>
-  );
+  return <div className="loader-container"></div>;
 }

@@ -4,6 +4,7 @@ import { Perf } from "r3f-perf";
 import { useGSAP } from "@gsap/react";
 import { useState, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
+
 import Debug from "./components/Debug";
 import Loader from "./components/Loader";
 import Experience from "./components/Experience";
@@ -13,17 +14,16 @@ function App() {
   gsap.registerPlugin(useGSAP);
 
   // States
-  const [showPerf, setShowPerf] = useState<boolean>(false);
+  const [showPerf, setShowPerf] = useState<boolean>(true);
 
   // Refs
   const stickerRef = useRef<THREE.Group>(null!);
 
-  // Store variables
   return (
     <>
       <main id="canvas-container">
-        <Debug setShowPerf={setShowPerf} />
-        <Canvas shadows camera={{ position: [0, 5, 0] }}>
+        <Debug showPerf={showPerf} setShowPerf={setShowPerf} />
+        <Canvas shadows>
           {showPerf && (
             <Perf position="top-left" showGraph={false} logsPerSecond={5} />
           )}
