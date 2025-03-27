@@ -1,15 +1,15 @@
-import { useEffect } from "react";
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
 import { addEffect } from "@react-three/fiber";
 import useAppStore from "../stores/useAppStore";
 
 export default function Loader() {
-  // Store variables
-  const phase = useAppStore((state) => state.phase);
+  // Refs
+  const loadingBar = useRef<HTMLDivElement>(null!);
 
   // Effects
   useEffect(() => {
-    const appStore = useAppStore.getState();
-    appStore.startLoading();
+    useAppStore.getState().startLoading();
 
     // Faking loading for development purpose
     // -----
@@ -17,21 +17,37 @@ export default function Loader() {
     // -----
     const startTime = Date.now();
     let elapsedTime = 0;
-    const finishTime = 3.2; // Finish time in seconds
+    const finishTime = 2; // Finish time in seconds
+    let loadingPercent = 0;
 
     const unsubEffect = addEffect(() => {
-      elapsedTime = (Date.now() - startTime) / 1000; // elapsedTime in seconds
+      const phase = useAppStore.getState().phase;
 
-      if (elapsedTime > finishTime) {
-        appStore.endLoading();
+      elapsedTime = (Date.now() - startTime) / 1000; // elapsedTime in seconds
+      loadingPercent = (elapsedTime / finishTime) * 100;
+
+      if (elapsedTime < finishTime && phase === "loading") {
+        gsap.to(loadingBar.current, {
+          width: `${loadingPercent}%`,
+          duration: 0.2,
+          ease: "power2.out",
+          overwrite: true,
+        });
+      }
+
+      if (elapsedTime >= finishTime && phase === "loading") {
+        useAppStore.getState().endLoading();
       }
     });
 
     return () => {
       unsubEffect();
-      elapsedTime = 0;
     };
   }, []);
 
-  return <div className="loader-container"></div>;
+  return (
+    <div className="bg-gray fixed bottom-0 h-1 w-full bg-stone-200">
+      <div ref={loadingBar} className="h-full w-0 bg-stone-800"></div>
+    </div>
+  );
 }

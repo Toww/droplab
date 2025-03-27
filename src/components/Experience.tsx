@@ -1,26 +1,20 @@
+import { OrbitControls } from "@react-three/drei";
 import Fog from "./Fog";
 import Clouds from "./Clouds";
 import Lights from "./Lights";
-import * as THREE from "three";
-import Sticker from "./Sticker";
-import { RefObject } from "react";
-import { OrbitControls } from "@react-three/drei";
+import Sticker from "./Sticker/Sticker";
 
-type TProps = {
-  stickerRef: RefObject<THREE.Group>;
-};
-
-export default function Experience({ stickerRef }: TProps) {
+export default function Experience() {
   return (
     <>
       <OrbitControls />
 
       <Lights />
 
+      <Sticker />
       <Clouds />
-      <Fog near={2} far={25} />
 
-      <Sticker ref={stickerRef} />
+      <Fog near={2} far={25} />
     </>
   );
 }

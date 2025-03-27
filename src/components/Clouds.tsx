@@ -1,11 +1,14 @@
+import gsap from "gsap";
 import * as THREE from "three";
-import { useRef } from "react";
 import { useControls } from "leva";
-import { Cloud } from "@react-three/drei";
+import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { Clouds, Cloud } from "@react-three/drei";
+import useAppStore from "../stores/useAppStore";
 
-export default function Clouds() {
+export default function CloudsComponent() {
   const cloudRef = useRef<THREE.Group>(null!);
+  const cloudsRef = useRef<THREE.Group>(null!);
 
   const { volume, segments, color, opacity, showClouds, position } =
     useControls("Clouds", {
@@ -34,16 +37,38 @@ export default function Clouds() {
     cloudRef.current.position.z += 7 * delta;
   });
 
+  useEffect(() => {
+    const unsubscribePhase = useAppStore.subscribe(
+      (state) => state.phase,
+      (value) => {
+        if (value === "ready") {
+          console.log(cloudsRef.current);
+        }
+
+        gsap.to((cloudsRef.current.children[1] as THREE.Mesh).material, {
+          opacity: 0,
+          duration: 3,
+        });
+      },
+    );
+
+    return () => {
+      unsubscribePhase();
+    };
+  }, []);
+
   return showClouds ? (
-    <Cloud
-      speed={0.2}
-      color={color}
-      ref={cloudRef}
-      volume={volume}
-      opacity={opacity}
-      bounds={[5, 1, 50]}
-      segments={segments}
-      position={position}
-    />
+    <Clouds ref={cloudsRef}>
+      <Cloud
+        speed={0.2}
+        color={color}
+        ref={cloudRef}
+        volume={volume}
+        opacity={opacity}
+        bounds={[5, 1, 50]}
+        segments={segments}
+        position={position}
+      />
+    </Clouds>
   ) : null;
 }

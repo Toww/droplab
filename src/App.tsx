@@ -1,10 +1,8 @@
 import { gsap } from "gsap";
-import * as THREE from "three";
 import { Perf } from "r3f-perf";
+import { useState } from "react";
 import { useGSAP } from "@gsap/react";
-import { useState, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
-
 import Debug from "./components/Debug";
 import Loader from "./components/Loader";
 import Experience from "./components/Experience";
@@ -16,9 +14,6 @@ function App() {
   // States
   const [showPerf, setShowPerf] = useState<boolean>(true);
 
-  // Refs
-  const stickerRef = useRef<THREE.Group>(null!);
-
   return (
     <>
       <main id="canvas-container">
@@ -27,7 +22,7 @@ function App() {
           {showPerf && (
             <Perf position="top-left" showGraph={false} logsPerSecond={5} />
           )}
-          <Experience stickerRef={stickerRef} />
+          <Experience />
         </Canvas>
         <Loader />
       </main>

@@ -5,8 +5,8 @@ import { Helper } from "@react-three/drei";
 export default function Lights() {
   // Leva
   const { lightsPosition, showHelper } = useControls("Lights", {
+    showHelper: false,
     lightsPosition: [1, 1, 6],
-    showHelper: true,
   });
 
   return (
