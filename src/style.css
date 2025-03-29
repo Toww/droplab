@@ -1,12 +1,34 @@
+/* Google fonts */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
+
+/* Tailwind */
 @import "tailwindcss";
 
+/* Project Fonts */
+@font-face {
+  font-family: Getai;
+  src: url("./fonts/GetaiGroteskDisplay-Black.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* Theme */
+@theme {
+  /* Fonts */
+  --font-bricolage: "Bricolage Grotesque", sans-serif;
+  --font-getai: "Getai", sans-serif;
+}
 
 /* CSS styles */
-#canvas-container {
-  top:0;
+
+body {
+  background: oklch(0.99 0.0045 78.3);
+  font-family: "Bricolage Grotesque", sans-serif;
+}
+
+#main-container {
+  top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   position: fixed;
-  background: white;
 }

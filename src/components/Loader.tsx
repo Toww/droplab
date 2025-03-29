@@ -5,7 +5,8 @@ import useAppStore from "../stores/useAppStore";
 
 export default function Loader() {
   // Refs
-  const loadingBar = useRef<HTMLDivElement>(null!);
+  const loaderContainer = useRef<HTMLDivElement>(null!);
+  const loaderProgress = useRef<HTMLDivElement>(null!);
 
   // Effects
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function Loader() {
       loadingPercent = (elapsedTime / finishTime) * 100;
 
       if (elapsedTime < finishTime && phase === "loading") {
-        gsap.to(loadingBar.current, {
+        gsap.to(loaderProgress.current, {
           width: `${loadingPercent}%`,
           duration: 0.2,
           ease: "power2.out",
@@ -45,9 +46,30 @@ export default function Loader() {
     };
   }, []);
 
+  useEffect(() => {
+    const unsubscribePhase = useAppStore.subscribe(
+      (state) => state.phase,
+      (phase) => {
+        if (phase === "ready") {
+          gsap.to(loaderContainer.current, {
+            opacity: 0,
+            duration: 3,
+          });
+        }
+      },
+    );
+
+    return () => {
+      unsubscribePhase();
+    };
+  }, []);
+
   return (
-    <div className="bg-gray fixed bottom-0 h-1 w-full bg-stone-200">
-      <div ref={loadingBar} className="h-full w-0 bg-stone-800"></div>
+    <div
+      ref={loaderContainer}
+      className="bg-gray fixed bottom-0 h-1 w-full bg-stone-200"
+    >
+      <div ref={loaderProgress} className="h-full w-0 bg-stone-800" />
     </div>
   );
 }

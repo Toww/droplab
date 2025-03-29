@@ -11,8 +11,9 @@ export default function Experience() {
 
       <Lights />
 
-      <Sticker />
-      <Clouds />
+      {/* // Intro */}
+      {/* <Sticker />
+      <Clouds /> */}
 
       <Fog near={2} far={25} />
     </>
