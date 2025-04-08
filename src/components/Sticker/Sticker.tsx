@@ -53,7 +53,7 @@ export default function Sticker() {
     };
   }, []);
 
-  // Mouse movement
+  // Frame loop
   useFrame((state) => {
     const phase = useAppStore.getState().phase;
 

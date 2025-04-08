@@ -26,28 +26,30 @@ export default function Layout() {
   return (
     <div ref={layoutContainer} className="opacity-0">
       {/* Header */}
-      <div className="z-50 grid w-full grid-cols-3 items-center px-6 py-5 font-light">
+      <div className="fixed top-5 z-50 grid w-full grid-cols-3 items-center px-6 font-light">
         <div className="text-left">
-          <a href="#" className="hover:underline">
+          <a href="#" className="leading-0 hover:underline">
             Work
           </a>
         </div>
-        <div className="text-center text-[32px] font-extrabold">Drop</div>
+        <div className="text-center text-[32px] leading-0 font-extrabold">
+          Drop
+        </div>
         <div className="text-right">
-          <a className="hover:underline" href="#">
+          <a className="leading-0 hover:underline" href="#">
             About
           </a>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="fixed bottom-0 z-50 flex w-full items-baseline justify-between p-6 font-light">
+      <div className="fixed bottom-6 z-50 flex w-full items-baseline justify-between px-6 font-light">
         <a href="#" className="hover:underline">
           Contact
         </a>
         <div className="flex items-center gap-2 text-xs">
           <p>Available for hire</p>
-          <div className="mt-0.5 size-2 rounded-full bg-green-500"></div>
+          <div className="size-2 rounded-full bg-green-500"></div>
         </div>
       </div>
     </div>

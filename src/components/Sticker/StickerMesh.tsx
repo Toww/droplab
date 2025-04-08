@@ -25,7 +25,7 @@ const StickerMesh = memo(() => {
     },
   });
 
-  // Head animation
+  // GSAP
   useGSAP(() => {
     gsap.to(headTexture.offset, {
       x: 11 / 12,
@@ -70,7 +70,7 @@ const StickerMesh = memo(() => {
     depthPacking: THREE.RGBADepthPacking,
   });
 
-  // Animation
+  // Frame loop
   useFrame((state) => {
     const { clock } = state;
     uniforms.uTime.value = clock.getElapsedTime();

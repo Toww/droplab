@@ -7,9 +7,11 @@ import { Clouds, Cloud } from "@react-three/drei";
 import useAppStore from "../stores/useAppStore";
 
 export default function CloudsComponent() {
+  // Refs
   const cloudRef = useRef<THREE.Group>(null!);
   const cloudsRef = useRef<THREE.Group>(null!);
 
+  // Leva
   const { volume, segments, color, opacity, showClouds, position } =
     useControls("Clouds", {
       showClouds: true,
@@ -33,18 +35,11 @@ export default function CloudsComponent() {
       },
     });
 
-  useFrame((_, delta) => {
-    cloudRef.current.position.z += 7 * delta;
-  });
-
+  // Effects
   useEffect(() => {
     const unsubscribePhase = useAppStore.subscribe(
       (state) => state.phase,
-      (value) => {
-        if (value === "ready") {
-          console.log(cloudsRef.current);
-        }
-
+      () => {
         gsap.to((cloudsRef.current.children[1] as THREE.Mesh).material, {
           opacity: 0,
           duration: 3,
@@ -56,6 +51,11 @@ export default function CloudsComponent() {
       unsubscribePhase();
     };
   }, []);
+
+  // Frame loop
+  useFrame((_, delta) => {
+    cloudRef.current.position.z += 7 * delta;
+  });
 
   return showClouds ? (
     <Clouds ref={cloudsRef}>
