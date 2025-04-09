@@ -2,8 +2,7 @@ import * as THREE from "three";
 import { useRef, useEffect, RefObject } from "react";
 import { ScrollControls, CameraControls } from "@react-three/drei";
 import Card from "./Card";
-
-type TProject = { filename: string; title: string };
+import useAppStore from "../../stores/useAppStore";
 
 type TCarrouselProps = {
   radius?: number;
@@ -16,16 +15,7 @@ type TProjectsGroupProps = {
 };
 
 function ProjectsGroup({ radius, projectsGroupRef }: TProjectsGroupProps) {
-  const projects: TProject[] = [
-    { filename: "bassodrome", title: "Bassodrome" },
-    { filename: "diploma", title: "Diploma Thesis" },
-    { filename: "pinata", title: "Piñata Radio" },
-    { filename: "bassodrome", title: "Bassodrome" },
-    { filename: "diploma", title: "Diploma Thesis" },
-    { filename: "pinata", title: "Piñata Radio" },
-  ];
-
-  // Hooks
+  const projects = useAppStore((state) => state.projects);
 
   return (
     <group position={[0, 0, -(radius + 2)]} ref={projectsGroupRef}>

@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { useFrame } from "@react-three/fiber";
 import { useRef, RefObject, useMemo, useState } from "react";
 import { Image, ImageProps, Float, useScroll } from "@react-three/drei";
+import useAppStore from "../../stores/useAppStore";
 
 type TCard = {
   url: string;
@@ -33,33 +34,42 @@ export default function Card({
 
   // Hooks
   const scroll = useScroll();
+  const updateHoveredProject = useAppStore(
+    (state) => state.updateHoveredProject,
+  );
+  const hoveredProject = useAppStore((state) => state.hoveredProject);
 
   // Handlers
   const handlePointerIn = (e: MouseEvent) => {
     e.stopPropagation();
-    setIsHovered(true);
+    if (imgRef.current.position.z > 0) {
+      updateHoveredProject(index);
+      setIsHovered(true);
+    }
   };
 
   const handlePointerOut = (e: MouseEvent) => {
     e.stopPropagation();
+    updateHoveredProject(null);
     setIsHovered(false);
   };
 
   // Variables
   // Scale values
   const initialScale = [8, 4.5] as [number, number];
-  const hoveredScale = [14, 7.8] as [number, number];
+  const hoveredScale = [12, 6.8] as [number, number];
 
   // Radius values
   const initialRadius = 0.25;
   const hoveredRadius = 0.05;
 
+  // Animation values
+  const animDuration = 0.5;
+  const animEase: gsap.EaseString = "power3.out";
+
   // GSAP
   useGSAP(() => {
-    const animDuration = 0.5;
-    const animEase: gsap.EaseString = "power3.out";
-
-    if (isHovered && imgRef.current.position.z > 0) {
+    if (isHovered) {
       gsap.to(imgRef.current.material, {
         radius: hoveredRadius,
         duration: animDuration,
@@ -114,6 +124,22 @@ export default function Card({
       Math.cos((index / projectsLength - scroll.offset) * Math.PI * 2) * radius;
 
     if (!isHovered) {
+      if (hoveredProject !== null) {
+        gsap.to(imgRef.current.scale, {
+          x: 4,
+          y: 2.25,
+          duration: animDuration,
+          ease: animEase,
+        });
+      } else {
+        gsap.to(imgRef.current.scale, {
+          x: initialScale[0],
+          y: initialScale[1],
+          duration: animDuration,
+          ease: animEase,
+        });
+      }
+
       gsap.to(imgRef.current.position, {
         x: targetXPos,
         y: -targetXPos / 3,

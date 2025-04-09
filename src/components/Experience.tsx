@@ -25,8 +25,8 @@ export default function Experience() {
       <Lights />
 
       {/* // Intro */}
-      {/* <Sticker />
-      <Clouds /> */}
+      {/* <Sticker /> */}
+      {/* <Clouds /> */}
       <Carrousel cameraControlsRef={cameraControlsRef} />
 
       <Fog near={2} far={25} />
