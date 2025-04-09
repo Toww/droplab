@@ -1,38 +1,12 @@
 import * as THREE from "three";
 import { useRef, useEffect, RefObject } from "react";
 import { ScrollControls, CameraControls } from "@react-three/drei";
-import Card from "./Card";
-import useAppStore from "../../stores/useAppStore";
+import ProjectsGroup from "./ProjectsGroup";
 
 type TCarrouselProps = {
   radius?: number;
   cameraControlsRef: RefObject<CameraControls>;
 };
-
-type TProjectsGroupProps = {
-  radius: number;
-  projectsGroupRef: RefObject<THREE.Group>;
-};
-
-function ProjectsGroup({ radius, projectsGroupRef }: TProjectsGroupProps) {
-  const projects = useAppStore((state) => state.projects);
-
-  return (
-    <group position={[0, 0, -(radius + 2)]} ref={projectsGroupRef}>
-      {projects.map((project, index) => (
-        <Card
-          key={`img-${index}`}
-          index={index}
-          radius={radius}
-          side={THREE.DoubleSide}
-          projectsLength={projects.length}
-          projectsGroupRef={projectsGroupRef}
-          url={`./carrousel/${project.filename}.jpg`}
-        />
-      ))}
-    </group>
-  );
-}
 
 export default function Carrousel({
   radius = 10,

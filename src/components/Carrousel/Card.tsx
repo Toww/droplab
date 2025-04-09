@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { useFrame } from "@react-three/fiber";
 import { useRef, RefObject, useMemo, useState } from "react";
 import { Image, ImageProps, Float, useScroll } from "@react-three/drei";
+import { getCardConfig } from "./config";
 import useAppStore from "../../stores/useAppStore";
 
 type TCard = {
@@ -32,12 +33,23 @@ export default function Card({
   // States
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
+  // Getters
+  const cardConfig = getCardConfig(index, projectsLength, radius);
+
   // Hooks
   const scroll = useScroll();
+  const hoveredProject = useAppStore((state) => state.hoveredProject);
+  const zRotation = useMemo(
+    () =>
+      index !== 0
+        ? Math.random() * (cardConfig.maxZRotation * 2) -
+          cardConfig.maxZRotation
+        : 0,
+    [],
+  );
   const updateHoveredProject = useAppStore(
     (state) => state.updateHoveredProject,
   );
-  const hoveredProject = useAppStore((state) => state.hoveredProject);
 
   // Handlers
   const handlePointerIn = (e: MouseEvent) => {
@@ -54,100 +66,83 @@ export default function Card({
     setIsHovered(false);
   };
 
-  // Variables
-  // Scale values
-  const initialScale = [8, 4.5] as [number, number];
-  const hoveredScale = [12, 6.8] as [number, number];
-
-  // Radius values
-  const initialRadius = 0.25;
-  const hoveredRadius = 0.05;
-
-  // Animation values
-  const animDuration = 0.5;
-  const animEase: gsap.EaseString = "power3.out";
-
   // GSAP
   useGSAP(() => {
+    // Card animation on hover
     if (isHovered) {
       gsap.to(imgRef.current.material, {
-        radius: hoveredRadius,
-        duration: animDuration,
-        ease: animEase,
+        radius: cardConfig.radius.hovered,
+        duration: cardConfig.animation.duration,
+        ease: cardConfig.animation.ease,
       });
 
       gsap.to(imgRef.current.position, {
+        x: cardConfig.position.hovered.x,
+        y: cardConfig.position.hovered.y,
         z: radius + 1,
-        x: 0,
-        y: 0,
-        duration: animDuration,
-        ease: animEase,
+        duration: cardConfig.animation.duration,
+        ease: cardConfig.animation.ease,
       });
 
       gsap.to(imgRef.current.scale, {
-        x: hoveredScale[0],
-        y: hoveredScale[1],
-        duration: animDuration,
-        ease: animEase,
+        x: cardConfig.scale.hovered.x,
+        y: cardConfig.scale.hovered.y,
+        duration: cardConfig.animation.duration,
+        ease: cardConfig.animation.ease,
       });
     } else {
       gsap.to(imgRef.current.material, {
-        radius: initialRadius,
-        duration: animDuration,
-        ease: animEase,
+        radius: cardConfig.radius.initial,
+        duration: cardConfig.animation.duration,
+        ease: cardConfig.animation.ease,
       });
 
       gsap.to(imgRef.current.scale, {
-        x: initialScale[0],
-        y: initialScale[1],
-        duration: animDuration,
-        ease: animEase,
+        x: cardConfig.scale.initial.x,
+        y: cardConfig.scale.initial.y,
+        duration: cardConfig.animation.duration,
+        ease: cardConfig.animation.ease,
       });
     }
   }, [isHovered]);
 
-  // Position values
-  let xPosition = Math.sin((index / projectsLength) * Math.PI * 2) * radius;
-  let zPosition = Math.cos((index / projectsLength) * Math.PI * 2) * radius;
+  // Frame loop
+  useFrame((state) => {
+    // Raycasting on every frame insted of on pointer move
+    state.events.update && state.events.update(); // Raycasts every frame rather than on pointer-move
 
-  // Rotation values
-  const maxZRotation = Math.PI * 0.04;
-  const zRotation = useMemo(
-    () => (index !== 0 ? Math.random() * (maxZRotation * 2) - maxZRotation : 0),
-    [],
-  );
-
-  useFrame(() => {
+    // Card position on scroll
     const targetXPos =
       Math.sin((index / projectsLength - scroll.offset) * Math.PI * 2) * radius;
     const targetZPos =
       Math.cos((index / projectsLength - scroll.offset) * Math.PI * 2) * radius;
 
+    gsap.to(imgRef.current.position, {
+      x: targetXPos,
+      y: -targetXPos / 3,
+      z: targetZPos,
+      duration: 0.2,
+      ease: "none",
+      overwrite: true,
+    });
+
+    // When the card is not hovered, or a card is hovered but not this one
     if (!isHovered) {
       if (hoveredProject !== null) {
         gsap.to(imgRef.current.scale, {
           x: 4,
           y: 2.25,
-          duration: animDuration,
-          ease: animEase,
+          duration: cardConfig.animation.duration,
+          ease: cardConfig.animation.ease,
         });
       } else {
         gsap.to(imgRef.current.scale, {
-          x: initialScale[0],
-          y: initialScale[1],
-          duration: animDuration,
-          ease: animEase,
+          x: cardConfig.scale.initial.x,
+          y: cardConfig.scale.initial.y,
+          duration: cardConfig.animation.duration,
+          ease: cardConfig.animation.ease,
         });
       }
-
-      gsap.to(imgRef.current.position, {
-        x: targetXPos,
-        y: -targetXPos / 3,
-        z: targetZPos,
-        duration: 0.2,
-        ease: "none",
-        overwrite: true,
-      });
     }
   });
 
@@ -162,12 +157,14 @@ export default function Card({
         side={side}
         transparent
         ref={imgRef}
-        radius={initialRadius}
-        scale={initialScale}
+        radius={cardConfig.radius.initial}
+        scale={[cardConfig.scale.initial.x, cardConfig.scale.initial.y]}
         rotation={[0, 0, zRotation]}
         onPointerOver={handlePointerIn}
         onPointerLeave={handlePointerOut}
-        position={[xPosition, -xPosition / 3, zPosition]}
+        position={
+          Object.values(cardConfig.position.initial) as [number, number, number]
+        }
       />
     </Float>
   );
