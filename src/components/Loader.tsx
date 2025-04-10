@@ -18,7 +18,7 @@ export default function Loader() {
     // -----
     const startTime = Date.now();
     let elapsedTime = 0;
-    const finishTime = 2; // Finish time in seconds
+    const finishTime = 0.1; // Finish time in seconds
     let loadingPercent = 0;
 
     const unsubEffect = addEffect(() => {
@@ -32,7 +32,7 @@ export default function Loader() {
           width: `${loadingPercent}%`,
           duration: 0.2,
           ease: "power2.out",
-          overwrite: true,
+          overwrite: true
         });
       }
 
@@ -53,10 +53,10 @@ export default function Loader() {
         if (phase === "ready") {
           gsap.to(loaderContainer.current, {
             opacity: 0,
-            duration: 3,
+            duration: 3
           });
         }
-      },
+      }
     );
 
     return () => {

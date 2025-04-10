@@ -1,4 +1,5 @@
 {
-  "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindStylesheet": "./src/style.css"
+  "trailingComma": "none",
+  "tailwindStylesheet": "./src/style.css",
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

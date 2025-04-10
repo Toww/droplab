@@ -1,18 +1,19 @@
 import { Leva, useControls } from "leva";
 import { useState, useEffect } from "react";
+import useAppStore from "../stores/useAppStore";
 
-type TProps = {
-  showPerf: boolean;
-  setShowPerf: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-export default function Debug({ showPerf, setShowPerf }: TProps) {
+export default function Debug() {
   // States
   const [showDebug, setShowDebug] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
 
+  // Hooks
+  const showPerf = useAppStore((state) => state.showPerf);
+  const updateShowPerf = useAppStore((state) => state.updateShowPerf);
+
   // Effects
   useEffect(() => {
+    // TODO - Refactor with React Router
     // Checking for debug hash in the URL
     window.location.hash === "#debug"
       ? setShowDebug(true)
@@ -33,8 +34,8 @@ export default function Debug({ showPerf, setShowPerf }: TProps) {
   useControls("Performances", {
     showPerf: {
       value: showPerf,
-      onChange: (value) => setShowPerf(value),
-    },
+      onChange: updateShowPerf
+    }
   });
 
   return (
@@ -44,7 +45,7 @@ export default function Debug({ showPerf, setShowPerf }: TProps) {
         collapsed: isCollapsed,
         onChange: (value) => {
           setIsCollapsed(value);
-        },
+        }
       }}
     />
   );

@@ -5,7 +5,7 @@ import { Float } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import StickerMesh from "./StickerMesh";
-import useAppStore from "../../stores/useAppStore";
+import useAppStore from "../../../stores/useAppStore";
 
 export default function Sticker() {
   // Ref
@@ -19,16 +19,16 @@ export default function Sticker() {
         value: 8,
         min: 0,
         max: 15,
-        step: 0.01,
+        step: 0.01
       },
       floatRotationIntensity: {
         value: 7,
         min: 0,
         max: 25,
-        step: 0.01,
+        step: 0.01
       },
-      floatingRange: [-0.7, 0.7],
-    },
+      floatingRange: [-0.7, 0.7]
+    }
   );
 
   // Effects
@@ -42,10 +42,10 @@ export default function Sticker() {
             y: -4,
             z: 10,
             duration: 3,
-            ease: "power2.in",
+            ease: "power2.in"
           });
         }
-      },
+      }
     );
 
     return () => {
@@ -68,7 +68,7 @@ export default function Sticker() {
         y: stickerY,
         duration: 0.2,
         ease: "power2.out",
-        overwrite: true,
+        overwrite: true
       });
     }
   });

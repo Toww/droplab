@@ -1,7 +1,8 @@
 import * as THREE from "three";
 import { useRef, useEffect, RefObject } from "react";
 import { ScrollControls, CameraControls } from "@react-three/drei";
-import ProjectsGroup from "./ProjectsGroup";
+import Card from "./Card";
+import useAppStore from "../../../stores/useAppStore";
 
 type TCarrouselProps = {
   radius?: number;
@@ -10,16 +11,19 @@ type TCarrouselProps = {
 
 export default function Carrousel({
   radius = 10,
-  cameraControlsRef,
+  cameraControlsRef
 }: TCarrouselProps) {
   // Refs
   const projectsGroupRef = useRef<THREE.Group>(null!);
+
+  // Hooks
+  const projects = useAppStore((state) => state.projects);
 
   // Effects
   useEffect(() => {
     cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
       paddingLeft: -4,
-      paddingRight: -4,
+      paddingRight: -4
     });
   }, [projectsGroupRef.current]);
 
@@ -30,7 +34,19 @@ export default function Carrousel({
       prepend
       style={{ scrollbarWidth: "none" }}
     >
-      <ProjectsGroup radius={radius} projectsGroupRef={projectsGroupRef} />
+      <group position={[0, 0, -(radius + 2)]} ref={projectsGroupRef}>
+        {projects.map((project, index) => (
+          <Card
+            key={`img-${index}`}
+            index={index}
+            radius={radius}
+            side={THREE.DoubleSide}
+            projectsLength={projects.length}
+            projectsGroupRef={projectsGroupRef}
+            url={`./carrousel/${project.filename}.jpg`}
+          />
+        ))}
+      </group>
     </ScrollControls>
   );
 }

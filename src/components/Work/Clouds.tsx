@@ -4,7 +4,7 @@ import { useControls } from "leva";
 import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Clouds, Cloud } from "@react-three/drei";
-import useAppStore from "../stores/useAppStore";
+import useAppStore from "../../stores/useAppStore";
 
 export default function CloudsComponent() {
   // Refs
@@ -20,19 +20,19 @@ export default function CloudsComponent() {
         value: 30,
         min: 1,
         max: 40,
-        step: 1,
+        step: 1
       },
       color: "black",
       opacity: { value: 0.35, min: 0, max: 1, steps: 0.01 },
       position: {
-        value: [0, 0, -40],
+        value: [0, 0, -40]
       },
       scale: {
         value: 1.0,
         min: 0.1,
         max: 4.0,
-        step: 0.001,
-      },
+        step: 0.001
+      }
     });
 
   // Effects
@@ -42,9 +42,9 @@ export default function CloudsComponent() {
       () => {
         gsap.to((cloudsRef.current.children[1] as THREE.Mesh).material, {
           opacity: 0,
-          duration: 3,
+          duration: 3
         });
-      },
+      }
     );
 
     return () => {

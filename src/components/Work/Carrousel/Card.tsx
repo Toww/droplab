@@ -1,11 +1,12 @@
 import gsap from "gsap";
 import * as THREE from "three";
 import { useGSAP } from "@gsap/react";
+import { useNavigate } from "react-router";
 import { useFrame } from "@react-three/fiber";
 import { useRef, RefObject, useMemo, useState } from "react";
 import { Image, ImageProps, Float, useScroll } from "@react-three/drei";
 import { getCardConfig } from "./config";
-import useAppStore from "../../stores/useAppStore";
+import useAppStore from "../../../stores/useAppStore";
 
 type TCard = {
   url: string;
@@ -20,7 +21,7 @@ export default function Card({
   side,
   index,
   radius,
-  projectsLength,
+  projectsLength
 }: TCard) {
   // Refs
   const imgRef = useRef<
@@ -38,32 +39,40 @@ export default function Card({
 
   // Hooks
   const scroll = useScroll();
+  const navigate = useNavigate();
   const hoveredProject = useAppStore((state) => state.hoveredProject);
+  const updateHoveredProject = useAppStore(
+    (state) => state.updateHoveredProject
+  );
   const zRotation = useMemo(
     () =>
       index !== 0
         ? Math.random() * (cardConfig.maxZRotation * 2) -
           cardConfig.maxZRotation
         : 0,
-    [],
-  );
-  const updateHoveredProject = useAppStore(
-    (state) => state.updateHoveredProject,
+    []
   );
 
   // Handlers
-  const handlePointerIn = (e: MouseEvent) => {
+  const handlePointerOver = (e: MouseEvent) => {
     e.stopPropagation();
     if (imgRef.current.position.z > 0) {
       updateHoveredProject(index);
       setIsHovered(true);
+      document.body.style.cursor = "pointer";
     }
   };
 
-  const handlePointerOut = (e: MouseEvent) => {
+  const handlePointerLeave = (e: MouseEvent) => {
     e.stopPropagation();
     updateHoveredProject(null);
     setIsHovered(false);
+    document.body.style.cursor = "auto";
+  };
+
+  const handleClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    navigate(`/project/${hoveredProject?.id}`);
   };
 
   // GSAP
@@ -73,7 +82,7 @@ export default function Card({
       gsap.to(imgRef.current.material, {
         radius: cardConfig.radius.hovered,
         duration: cardConfig.animation.duration,
-        ease: cardConfig.animation.ease,
+        ease: cardConfig.animation.ease
       });
 
       gsap.to(imgRef.current.position, {
@@ -81,27 +90,27 @@ export default function Card({
         y: cardConfig.position.hovered.y,
         z: radius + 1,
         duration: cardConfig.animation.duration,
-        ease: cardConfig.animation.ease,
+        ease: cardConfig.animation.ease
       });
 
       gsap.to(imgRef.current.scale, {
         x: cardConfig.scale.hovered.x,
         y: cardConfig.scale.hovered.y,
         duration: cardConfig.animation.duration,
-        ease: cardConfig.animation.ease,
+        ease: cardConfig.animation.ease
       });
     } else {
       gsap.to(imgRef.current.material, {
         radius: cardConfig.radius.initial,
         duration: cardConfig.animation.duration,
-        ease: cardConfig.animation.ease,
+        ease: cardConfig.animation.ease
       });
 
       gsap.to(imgRef.current.scale, {
         x: cardConfig.scale.initial.x,
         y: cardConfig.scale.initial.y,
         duration: cardConfig.animation.duration,
-        ease: cardConfig.animation.ease,
+        ease: cardConfig.animation.ease
       });
     }
   }, [isHovered]);
@@ -123,7 +132,7 @@ export default function Card({
       z: targetZPos,
       duration: 0.2,
       ease: "none",
-      overwrite: true,
+      overwrite: true
     });
 
     // When the card is not hovered, or a card is hovered but not this one
@@ -133,14 +142,14 @@ export default function Card({
           x: 4,
           y: 2.25,
           duration: cardConfig.animation.duration,
-          ease: cardConfig.animation.ease,
+          ease: cardConfig.animation.ease
         });
       } else {
         gsap.to(imgRef.current.scale, {
           x: cardConfig.scale.initial.x,
           y: cardConfig.scale.initial.y,
           duration: cardConfig.animation.duration,
-          ease: cardConfig.animation.ease,
+          ease: cardConfig.animation.ease
         });
       }
     }
@@ -160,8 +169,9 @@ export default function Card({
         radius={cardConfig.radius.initial}
         scale={[cardConfig.scale.initial.x, cardConfig.scale.initial.y]}
         rotation={[0, 0, zRotation]}
-        onPointerOver={handlePointerIn}
-        onPointerLeave={handlePointerOut}
+        onPointerOver={handlePointerOver}
+        onPointerLeave={handlePointerLeave}
+        onClick={handleClick}
         position={
           Object.values(cardConfig.position.initial) as [number, number, number]
         }
