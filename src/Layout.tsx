@@ -3,7 +3,8 @@ import { useGSAP } from "@gsap/react";
 import Nav from "./components/Nav";
 import Debug from "./components/Debug";
 import Loader from "./components/Loader";
-import { Outlet } from "react-router";
+import CustomOutlet from "./components/CustomOutlet";
+
 function Layout() {
   // GSAP Config
   gsap.registerPlugin(useGSAP);
@@ -16,8 +17,8 @@ function Layout() {
         <Debug />
         <Nav />
 
-        {/* React-router's provided components, as configured in routes.ts*/}
-        <Outlet />
+        {/* React-router's Outlet with page transitions */}
+        <CustomOutlet />
       </main>
     </>
   );

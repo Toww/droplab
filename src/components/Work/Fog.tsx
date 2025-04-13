@@ -10,7 +10,7 @@ export default function Fog({ near, far }: TProps) {
   const { fogNear, fogFar, showFog } = useControls("Fog", {
     showFog: true,
     fogNear: near,
-    fogFar: far,
+    fogFar: far
   });
 
   return showFog ? (

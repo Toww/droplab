@@ -5,8 +5,8 @@ import { useControls } from "leva";
 import { useGSAP } from "@gsap/react";
 import { useFrame } from "@react-three/fiber";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
-import stickerVertexShader from "../../shaders/sticker/vertex.glsl";
-import stickerFragmentShader from "../../shaders/sticker/fragment.glsl";
+import stickerVertexShader from "../../../shaders/sticker/vertex.glsl";
+import stickerFragmentShader from "../../../shaders/sticker/fragment.glsl";
 
 const StickerMesh = memo(() => {
   // Leva
@@ -15,14 +15,14 @@ const StickerMesh = memo(() => {
       value: 0.1,
       min: 0,
       max: 1,
-      step: 0.001,
+      step: 0.001
     },
     uWobbleFactor: {
       value: 1,
       min: 0,
       max: 10,
-      step: 0.001,
-    },
+      step: 0.001
+    }
   });
 
   // GSAP
@@ -31,7 +31,7 @@ const StickerMesh = memo(() => {
       x: 11 / 12,
       duration: 0.75,
       ease: "steps(11)",
-      repeat: -1,
+      repeat: -1
     });
   });
 
@@ -46,7 +46,7 @@ const StickerMesh = memo(() => {
   const uniforms = {
     uTime: new THREE.Uniform(0),
     uWobbleFactor: new THREE.Uniform(uWobbleFactor),
-    uLoadingProgress: new THREE.Uniform(uLoadingProgress),
+    uLoadingProgress: new THREE.Uniform(uLoadingProgress)
   };
 
   // Materials
@@ -58,7 +58,7 @@ const StickerMesh = memo(() => {
     uniforms: uniforms,
     side: THREE.DoubleSide,
     vertexShader: stickerVertexShader,
-    fragmentShader: stickerFragmentShader,
+    fragmentShader: stickerFragmentShader
   });
 
   const stickerDepthMaterial = new CustomShaderMaterial({
@@ -67,7 +67,7 @@ const StickerMesh = memo(() => {
     // MeshDepthMaterial props
     uniforms: uniforms,
     vertexShader: stickerVertexShader,
-    depthPacking: THREE.RGBADepthPacking,
+    depthPacking: THREE.RGBADepthPacking
   });
 
   // Frame loop

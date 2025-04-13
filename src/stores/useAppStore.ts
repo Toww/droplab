@@ -14,7 +14,7 @@ type AppStoreActions = {
   startLoading: () => void;
   endLoading: () => void;
   updateShowPerf: () => void;
-  updateHoveredProject: (project: number | null) => void;
+  updateHoveredProject: (projectIndex: number | null) => void;
 };
 
 export default create<AppStoreState & AppStoreActions>()(
