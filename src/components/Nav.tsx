@@ -7,6 +7,7 @@ import ArrowIcon from "../assets/arrow.svg?react";
 export default function Nav() {
   // Refs
   const NavContainer = useRef<HTMLDivElement>(null!);
+  const contactLinkRef = useRef<HTMLAnchorElement>(null);
 
   // Getters
   const getNavLinkClasses = ({ isActive }: NavLinkRenderProps): string => {
@@ -16,6 +17,12 @@ export default function Nav() {
   // Hooks
   const nextProject = useAppStore((state) => state.nextProject);
   const previousProject = useAppStore((state) => state.previousProject);
+
+  // Adding obfuscated link on first load
+  useEffect(() => {
+    const link = window.atob("bWFpbHRvOmNvbnRhY3RAZHJvcC1sYWIuY29t");
+    contactLinkRef.current?.setAttribute("href", link);
+  }, []);
 
   useEffect(() => {
     const unsubscribePhase = useAppStore.subscribe(
@@ -82,7 +89,7 @@ export default function Nav() {
 
       {/* -- Footer -- */}
       <div className="fixed bottom-6 z-50 flex w-full items-baseline justify-between px-6 font-light">
-        <a href="#" className="leading-0 hover:underline">
+        <a ref={contactLinkRef} className="leading-0 hover:underline">
           Contact
         </a>
         <div className="flex items-center gap-2 text-xs">
