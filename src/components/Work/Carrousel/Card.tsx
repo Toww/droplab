@@ -72,7 +72,7 @@ export default function Card({
 
   const handleClick = (e: MouseEvent) => {
     e.stopPropagation();
-    navigate(`/project/${hoveredProject?.id}`);
+    navigate(`/projects/${hoveredProject?.id}`);
   };
 
   // GSAP

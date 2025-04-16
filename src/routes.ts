@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import Layout from "./Layout";
-import Work from "./components/Work/Work";
 import About from "./components/About";
-import ProjectDetail from "./components/ProjectDetail";
+import Work from "./components/Work/Work";
+import ProjectDetails from "./components/ProjectDetails/ProjectDetails";
 
 export default createBrowserRouter([
   {
@@ -13,11 +13,11 @@ export default createBrowserRouter([
         Component: Work
       },
       {
-        path: "/project",
+        path: "/projects",
         children: [
           {
             path: ":pid",
-            Component: ProjectDetail
+            Component: ProjectDetails
           }
         ]
       },

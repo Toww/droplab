@@ -1,19 +1,21 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
-
-type TProject = { filename: string; title: string; id: string };
+import projectsList, { TProject } from "../projects/projectsList";
 
 type AppStoreState = {
-  phase: "loading" | "ready" | null;
-  hoveredProject: TProject | null;
-  projects: TProject[];
   showPerf: boolean;
+  projects: TProject[];
+  previousProject: TProject | null;
+  nextProject: TProject | null;
+  hoveredProject: TProject | null;
+  phase: "loading" | "ready" | null;
 };
 
 type AppStoreActions = {
-  startLoading: () => void;
   endLoading: () => void;
+  startLoading: () => void;
   updateShowPerf: () => void;
+  updateProjectNav: (projectIndex: number) => void;
   updateHoveredProject: (projectIndex: number | null) => void;
 };
 
@@ -21,15 +23,24 @@ export default create<AppStoreState & AppStoreActions>()(
   subscribeWithSelector((set) => ({
     phase: null,
     showPerf: false,
+    nextProject: null,
+    previousProject: null,
     hoveredProject: null,
-    projects: [
-      { filename: "bassodrome", title: "Bassodrome", id: "bassodrome" },
-      { filename: "diploma", title: "Diploma Thesis", id: "diploma" },
-      { filename: "pinata", title: "Piñata Radio", id: "pinata" },
-      { filename: "bassodrome", title: "Bassodrome", id: "bassodrome2" },
-      { filename: "diploma", title: "Diploma Thesis", id: "diploma2" },
-      { filename: "pinata", title: "Piñata Radio", id: "pinata2" }
-    ],
+    projects: projectsList,
+    startLoading: () =>
+      set((state) => {
+        if (state.phase === null) {
+          return { phase: "loading" };
+        }
+        return {};
+      }),
+    endLoading: () =>
+      set((state) => {
+        if (state.phase === "loading") {
+          return { phase: "ready" };
+        }
+        return {};
+      }),
     updateShowPerf: () => {
       set((state) => {
         return {
@@ -44,19 +55,12 @@ export default create<AppStoreState & AppStoreActions>()(
             projectIndex !== null ? state.projects[projectIndex] : null
         };
       }),
-    startLoading: () =>
+    updateProjectNav: (projectIndex) =>
       set((state) => {
-        if (state.phase === null) {
-          return { phase: "loading" };
-        }
-        return {};
-      }),
-    endLoading: () =>
-      set((state) => {
-        if (state.phase === "loading") {
-          return { phase: "ready" };
-        }
-        return {};
+        return {
+          nextProject: state.projects[projectIndex + 1] || null,
+          previousProject: state.projects[projectIndex - 1] || null
+        };
       })
   }))
 );

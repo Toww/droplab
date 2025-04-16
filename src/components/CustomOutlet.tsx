@@ -27,8 +27,8 @@ export default function CustomOutlet() {
         opacity: 0,
         duration: animDuration,
         onComplete: () => {
-          // After animation out complete, display new path's component
-          //  and update previous location pathname.
+          // After animation out, display new path's component
+          // and update previous location pathname.
           setDisplayOutlet(currentOutlet);
           gsap.to(containerRef.current, {
             opacity: 1,
@@ -37,10 +37,10 @@ export default function CustomOutlet() {
           previousLocationPathname.current = location.pathname;
         }
       });
-    } else if (previousLocationPathname.current === null) {
+    } else {
       // Initial render
 
-      // Display current react-router's outlet with fade in animation
+      // Display current react-router's outlet with slow fade in animation
       // and set previous location pathname
       setDisplayOutlet(currentOutlet);
       gsap.fromTo(
@@ -58,11 +58,7 @@ export default function CustomOutlet() {
   }, [location.pathname]);
 
   return (
-    <div
-      className="fixed h-screen w-screen"
-      style={{ opacity: 0 }}
-      ref={containerRef}
-    >
+    <div ref={containerRef} style={{ opacity: 0 }}>
       {displayOutlet}
     </div>
   );

@@ -7,7 +7,7 @@
 /* Project Fonts */
 @font-face {
   font-family: Getai;
-  src: url("./fonts/GetaiGroteskDisplay-Black.woff2") format("woff2");
+  src: url("/fonts/GetaiGrotesk.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -19,16 +19,7 @@
 }
 
 /* CSS styles */
-
 body {
   background: oklch(0.99 0.0045 78.3);
   font-family: "Bricolage Grotesque", sans-serif;
-}
-
-#main-container {
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
 }

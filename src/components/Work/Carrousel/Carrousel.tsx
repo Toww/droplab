@@ -43,7 +43,7 @@ export default function Carrousel({
             side={THREE.DoubleSide}
             projectsLength={projects.length}
             projectsGroupRef={projectsGroupRef}
-            url={`./carrousel/${project.filename}.jpg`}
+            url={`./images/${project.id}/thumbnail.jpg`}
           />
         ))}
       </group>
