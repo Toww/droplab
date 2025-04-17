@@ -8,6 +8,17 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    /* Absolute imports */
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@stores/*": ["./src/stores/*"],
+      "@shaders/*": ["./src/shaders/*"],
+      "@projects/*": ["./src/projects/*"],
+      "@components/*": ["./src/components/*"]
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

@@ -1,4 +1,4 @@
-import { TProjectVideo } from "../../projects/projectsList";
+import { TProjectVideo } from "@projects/projectsList";
 
 type TProps = {
   video: TProjectVideo;

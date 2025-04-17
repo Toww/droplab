@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import { addEffect } from "@react-three/fiber";
-import useAppStore from "../stores/useAppStore";
+import useAppStore from "@stores/useAppStore";
 
 export default function Loader() {
   // Refs

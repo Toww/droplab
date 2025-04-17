@@ -2,7 +2,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { JSX, useRef, useState } from "react";
 import { useLocation, useOutlet } from "react-router";
-import useAppStore from "../stores/useAppStore";
+import useAppStore from "@stores/useAppStore";
 
 export default function CustomOutlet() {
   // States

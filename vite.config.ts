@@ -6,5 +6,15 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), glsl(), tailwindcss(), svgr()]
+  plugins: [react(), glsl(), tailwindcss(), svgr()],
+  resolve: {
+    alias: {
+      src: "/src",
+      "@assets": "/src/assets/",
+      "@stores": "/src/stores/",
+      "@shaders": "/src/shaders/",
+      "@projects": "/src/projects/",
+      "@components": "/src/components/"
+    }
+  }
 });

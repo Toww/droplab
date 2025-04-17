@@ -1,8 +1,8 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
-import GithubIcon from "../assets/github.svg?react";
-import LinkedinIcon from "../assets/linkedin.svg?react";
+import GithubIcon from "@assets/github.svg?react";
+import LinkedinIcon from "@assets/linkedin.svg?react";
 
 export default function About() {
   // Refs

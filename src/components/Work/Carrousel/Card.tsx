@@ -6,7 +6,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef, RefObject, useMemo, useState } from "react";
 import { Image, ImageProps, Float, useScroll } from "@react-three/drei";
 import { getCardConfig } from "./config";
-import useAppStore from "../../../stores/useAppStore";
+import useAppStore from "@stores/useAppStore";
 
 type TCard = {
   url: string;

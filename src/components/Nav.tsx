@@ -1,8 +1,8 @@
 import gsap from "gsap";
 import { useRef, useEffect } from "react";
 import { NavLink, NavLinkRenderProps } from "react-router";
-import useAppStore from "../stores/useAppStore";
-import ArrowIcon from "../assets/arrow.svg?react";
+import useAppStore from "@stores/useAppStore";
+import ArrowIcon from "@assets/arrow.svg?react";
 
 export default function Nav() {
   // Refs

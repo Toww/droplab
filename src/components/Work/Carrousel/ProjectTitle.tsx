@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { useRef, useEffect } from "react";
-import useAppStore from "../../../stores/useAppStore";
+import useAppStore from "@stores/useAppStore";
 
 export default function ProjectTitle() {
   // Refs

@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import { TProjectLink } from "../../projects/projectsList";
+import { TProjectLink } from "@projects/projectsList";
 
 type TProps = {
   links: TProjectLink[];

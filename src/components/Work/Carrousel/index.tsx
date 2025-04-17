@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { useRef, useEffect, RefObject } from "react";
 import { ScrollControls, CameraControls } from "@react-three/drei";
 import Card from "./Card";
-import useAppStore from "../../../stores/useAppStore";
+import useAppStore from "@stores/useAppStore";
 
 type TCarrouselProps = {
   radius?: number;

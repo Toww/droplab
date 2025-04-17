@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
-import projectsList, { TProject } from "../projects/projectsList";
+import projectsList, { TProject } from "@projects/projectsList";
 
 type AppStoreState = {
   showPerf: boolean;

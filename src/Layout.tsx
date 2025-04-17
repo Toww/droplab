@@ -1,9 +1,9 @@
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import Nav from "./components/Nav";
-import Debug from "./components/Debug";
-import Loader from "./components/Loader";
-import CustomOutlet from "./components/CustomOutlet";
+import Nav from "@components/Nav";
+import Debug from "@components/Debug";
+import Loader from "@components/Loader";
+import CustomOutlet from "@components/CustomOutlet";
 
 function Layout() {
   // GSAP Config

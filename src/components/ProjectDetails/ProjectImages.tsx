@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import { TProject } from "../../projects/projectsList";
+import { TProject } from "@projects/projectsList";
 
 type TProps = {
   marginTop: number;

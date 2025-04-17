@@ -4,7 +4,7 @@ import { useControls } from "leva";
 import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Clouds, Cloud } from "@react-three/drei";
-import useAppStore from "../../stores/useAppStore";
+import useAppStore from "@stores/useAppStore";
 
 export default function CloudsComponent() {
   // Refs

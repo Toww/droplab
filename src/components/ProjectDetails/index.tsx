@@ -1,9 +1,9 @@
 import { useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
-import useAppStore from "../../stores/useAppStore";
 import ProjectLinks from "./ProjectLinks";
 import ProjectVideo from "./ProjectVideo";
 import ProjectImages from "./ProjectImages";
+import useAppStore from "@stores/useAppStore";
 
 export default function ProjectDetails() {
   // Refs

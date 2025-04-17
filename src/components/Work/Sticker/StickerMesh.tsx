@@ -5,8 +5,8 @@ import { useControls } from "leva";
 import { useGSAP } from "@gsap/react";
 import { useFrame } from "@react-three/fiber";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
-import stickerVertexShader from "../../../shaders/sticker/vertex.glsl";
-import stickerFragmentShader from "../../../shaders/sticker/fragment.glsl";
+import stickerVertexShader from "@shaders/sticker/vertex.glsl";
+import stickerFragmentShader from "@shaders/sticker/fragment.glsl";
 
 const StickerMesh = memo(() => {
   // Leva

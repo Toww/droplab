@@ -1,6 +1,6 @@
 import { Leva, useControls } from "leva";
 import { useState, useEffect } from "react";
-import useAppStore from "../stores/useAppStore";
+import useAppStore from "@stores/useAppStore";
 
 export default function Debug() {
   // States
