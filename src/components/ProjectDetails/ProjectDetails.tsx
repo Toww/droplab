@@ -59,6 +59,7 @@ export default function ProjectDetails() {
           {/* -- Description -- */}
           <div className="mt-8 space-y-8 text-stone-700">
             <p>{project?.description}</p>
+            {/* -- Links -- */}
             {project.links && project.links.length > 0 && (
               <ProjectLinks links={project.links} />
             )}

@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { JSX, useRef, useState } from "react";
 import { useLocation, useOutlet } from "react-router";
+import useAppStore from "../stores/useAppStore";
 
 export default function CustomOutlet() {
   // States
@@ -14,6 +15,7 @@ export default function CustomOutlet() {
   // Hooks
   const location = useLocation();
   const currentOutlet = useOutlet();
+  const updateProjectNav = useAppStore((state) => state.updateProjectNav);
 
   useGSAP(() => {
     const animDuration = 0.5;
@@ -37,6 +39,11 @@ export default function CustomOutlet() {
           previousLocationPathname.current = location.pathname;
         }
       });
+
+      // Reset previous and next projects if path not related to projects
+      if (!location.pathname.includes("projects")) {
+        updateProjectNav(null);
+      }
     } else {
       // Initial render
 

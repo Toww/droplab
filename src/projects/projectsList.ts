@@ -26,7 +26,7 @@ const projectsList: TProject[] = [
     id: "bassodrome",
     type: "VJing",
     description:
-      "VJing / Mapping for the Bassodrome Festival 3.0 realised in collaboration with SuperSuper.",
+      "VJing / Mapping for the Bassodrome Festival 3.0 realised in collaboration with Benjamin Montjean.",
     video: {
       src: "https://player.vimeo.com/video/107347491?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
       title: "VJing / Mapping - Bassodrome Festival 3.0"
@@ -45,12 +45,6 @@ const projectsList: TProject[] = [
       }
     ],
     imgFiles: ["01", ["02", "03"], "04", ["05", "06"], "07", ["08", "09"], "10"]
-  },
-  {
-    title: "Bassodrome Festival 3.0 avec une fausse moustache",
-    id: "bassodrome",
-    type: "VJing",
-    description: "Please delete me"
   }
 ];
 

@@ -15,7 +15,7 @@ type AppStoreActions = {
   endLoading: () => void;
   startLoading: () => void;
   updateShowPerf: () => void;
-  updateProjectNav: (projectIndex: number) => void;
+  updateProjectNav: (projectIndex: number | null) => void;
   updateHoveredProject: (projectIndex: number | null) => void;
 };
 
@@ -55,12 +55,20 @@ export default create<AppStoreState & AppStoreActions>()(
             projectIndex !== null ? state.projects[projectIndex] : null
         };
       }),
-    updateProjectNav: (projectIndex) =>
-      set((state) => {
-        return {
-          nextProject: state.projects[projectIndex + 1] || null,
-          previousProject: state.projects[projectIndex - 1] || null
-        };
-      })
+    updateProjectNav: (projectIndex) => {
+      if (projectIndex !== null) {
+        set((state) => {
+          return {
+            nextProject: state.projects[projectIndex + 1] || null,
+            previousProject: state.projects[projectIndex - 1] || null
+          };
+        });
+      } else {
+        set(() => ({
+          nextProject: null,
+          previousProject: null
+        }));
+      }
+    }
   }))
 );
