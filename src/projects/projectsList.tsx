@@ -1,3 +1,6 @@
+import { JSX } from "react";
+import Portal from "src/components/Models/Portal";
+
 export type TProjectLink = {
   url: string;
   text: string;
@@ -15,12 +18,21 @@ export type TProject = {
   title: string;
   imgFiles?: TProjectImgFiles;
   description: string;
-  type?: "VJing" | "Graphic design" | "Dev";
+  type?: string;
   links?: TProjectLink[];
   video?: TProjectVideo;
+  model?: JSX.Element;
 };
 
 const projectsList: TProject[] = [
+  {
+    title: "Portal",
+    id: "portal",
+    type: "Dev | 3D",
+    description:
+      "Sculpting, baking and exporting of a portal made in Blender for integration as a 3D model in Three.js. This exercise is part of Bruno Simon's ThreeJS Journey course.",
+    model: <Portal />
+  },
   {
     title: "Bassodrome Festival 3.0",
     id: "bassodrome",

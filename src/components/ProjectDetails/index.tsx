@@ -1,5 +1,7 @@
 import { useParams } from "react-router";
-import { useEffect, useRef, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { JSX, useEffect, useRef, useState } from "react";
+import { Center, OrbitControls } from "@react-three/drei";
 import ProjectLinks from "./ProjectLinks";
 import ProjectVideo from "./ProjectVideo";
 import ProjectImages from "./ProjectImages";
@@ -39,6 +41,30 @@ export default function ProjectDetails() {
     }
   }, [projectIndex]);
 
+  // Getters
+  const getProjectContent = (): JSX.Element | undefined => {
+    if (project.video !== undefined) {
+      return <ProjectVideo video={project.video} />;
+    } else if (project.imgFiles !== undefined) {
+      return <ProjectImages marginTop={imagesMarginTop} project={project} />;
+    } else if (project.model !== undefined) {
+      return (
+        <div className="flex h-full w-full items-center justify-center">
+          <div className="h-full w-full">
+            <Canvas
+              flat
+              camera={{ fov: 45, near: 0.1, far: 200, position: [1, 1, 9] }}
+            >
+              <OrbitControls />
+              <color args={["#ebebeb"]} attach="background" />
+              <Center>{project.model}</Center>
+            </Canvas>
+          </div>
+        </div>
+      );
+    }
+  };
+
   return (
     <>
       {/* // Project detail */}
@@ -68,14 +94,8 @@ export default function ProjectDetails() {
 
         <div className="col-span-1" />
 
-        {/* // Images */}
-        <div className="col-span-6 flex">
-          {project.video !== undefined ? (
-            <ProjectVideo video={project.video} />
-          ) : (
-            <ProjectImages marginTop={imagesMarginTop} project={project} />
-          )}
-        </div>
+        {/* // Content */}
+        <div className="col-span-6 flex">{getProjectContent()}</div>
       </div>
     </>
   );

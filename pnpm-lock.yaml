@@ -50,6 +50,9 @@ importers:
       three-custom-shader-material:
         specifier: ^6.3.1
         version: 6.3.1(@react-three/fiber@9.1.2(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0))(react@19.1.0)(three@0.175.0)
+      three-stdlib:
+        specifier: ^2.35.15
+        version: 2.35.15(three@0.175.0)
       zustand:
         specifier: ^5.0.3
         version: 5.0.3(@types/react@19.1.0)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
