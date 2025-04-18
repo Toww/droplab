@@ -9,7 +9,7 @@ export default function ProjectLinks({ links }: TProps): JSX.Element {
   return (
     <div className="flex space-x-4">
       {links.map((link) => (
-        <a href={link.url} className="underline">
+        <a href={link.url} className="underline" target="_blank">
           {link.text}
         </a>
       ))}

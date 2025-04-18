@@ -34,6 +34,24 @@ const projectsList: TProject[] = [
     model: <Portal />
   },
   {
+    title: "Marble Race",
+    id: "marble",
+    type: "Dev",
+    description:
+      "Final project from Bruno Simon's Three.js Journey, combining some of the techniques learned through the course. It uses uses Three.js, React Three Fiber, Drei, and Rapier to handle physics.",
+    links: [
+      {
+        url: "https://marble-race-iota.vercel.app/",
+        text: "Play !"
+      },
+      {
+        url: "https://github.com/Toww/marble-race",
+        text: "View on Github"
+      }
+    ],
+    imgFiles: ["01"]
+  },
+  {
     title: "Bassodrome Festival 3.0",
     id: "bassodrome",
     type: "VJing",
