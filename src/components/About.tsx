@@ -1,6 +1,6 @@
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
 import GithubIcon from "@assets/github.svg?react";
 import LinkedinIcon from "@assets/linkedin.svg?react";
 
@@ -13,7 +13,7 @@ export default function About() {
     gsap.fromTo(
       imageContainerRef.current,
       { rotation: 0, y: 100, opacity: 0 },
-      { rotation: 3.5, y: 10, opacity: 1, duration: 1.5, ease: "back.out(1;4)" }
+      { rotation: 3.5, y: 10, opacity: 1, duration: 1.5, ease: "back.out(1)" }
     );
   }, []);
 

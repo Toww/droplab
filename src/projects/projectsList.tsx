@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import Portal from "src/components/Models/Portal";
+import Portal from "@components/Models/Portal";
 
 export type TProjectLink = {
   url: string;

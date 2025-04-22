@@ -39,11 +39,13 @@ export default function CloudsComponent() {
   useEffect(() => {
     const unsubscribePhase = useAppStore.subscribe(
       (state) => state.phase,
-      () => {
-        gsap.to((cloudsRef.current.children[1] as THREE.Mesh).material, {
-          opacity: 0,
-          duration: 3
-        });
+      (phase) => {
+        if (phase === "ready") {
+          gsap.to((cloudsRef.current.children[1] as THREE.Mesh).material, {
+            opacity: 0,
+            duration: 1
+          });
+        }
       }
     );
 

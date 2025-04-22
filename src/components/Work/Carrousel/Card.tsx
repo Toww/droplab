@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { useGSAP } from "@gsap/react";
 import { useNavigate } from "react-router";
 import { useFrame } from "@react-three/fiber";
-import { useRef, RefObject, useMemo, useState } from "react";
+import { useRef, RefObject, useMemo, useState, useEffect } from "react";
 import { Image, ImageProps, Float, useScroll } from "@react-three/drei";
 import { getCardConfig } from "./config";
 import useAppStore from "@stores/useAppStore";
@@ -40,6 +40,7 @@ export default function Card({
   // Hooks
   const scroll = useScroll();
   const navigate = useNavigate();
+  const phase = useAppStore((state) => state.phase);
   const hoveredProject = useAppStore((state) => state.hoveredProject);
   const updateHoveredProject = useAppStore(
     (state) => state.updateHoveredProject
@@ -56,7 +57,8 @@ export default function Card({
   // Handlers
   const handlePointerOver = (e: MouseEvent) => {
     e.stopPropagation();
-    if (imgRef.current.position.z > 0) {
+
+    if (imgRef.current.position.z > 0 && phase === "ready") {
       updateHoveredProject(index);
       setIsHovered(true);
       document.body.style.cursor = "pointer";
@@ -65,15 +67,36 @@ export default function Card({
 
   const handlePointerLeave = (e: MouseEvent) => {
     e.stopPropagation();
-    updateHoveredProject(null);
-    setIsHovered(false);
-    document.body.style.cursor = "auto";
+    if (hoveredProject !== null) {
+      updateHoveredProject(null);
+      setIsHovered(false);
+      document.body.style.cursor = "auto";
+    }
   };
 
   const handleClick = (e: MouseEvent) => {
     e.stopPropagation();
-    navigate(`/projects/${hoveredProject?.id}`);
+    if (phase === "ready" && hoveredProject?.id) {
+      navigate(`/projects/${hoveredProject?.id}`);
+      updateHoveredProject(null);
+      setIsHovered(false);
+    }
   };
+
+  // GSAP / Phase handling
+  useGSAP(() => {
+    if (phase === "ready") {
+      gsap.fromTo(
+        imgRef.current.material,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.3,
+          delay: 1
+        }
+      );
+    }
+  }, [phase]);
 
   // GSAP
   useGSAP(() => {
@@ -128,7 +151,7 @@ export default function Card({
 
     gsap.to(imgRef.current.position, {
       x: targetXPos,
-      y: -targetXPos / 3,
+      y: targetXPos / 3,
       z: targetZPos,
       duration: 0.2,
       ease: "none",
@@ -172,6 +195,7 @@ export default function Card({
         onPointerOver={handlePointerOver}
         onPointerLeave={handlePointerLeave}
         onClick={handleClick}
+        opacity={0}
         position={
           Object.values(cardConfig.position.initial) as [number, number, number]
         }

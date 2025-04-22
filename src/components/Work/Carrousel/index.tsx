@@ -21,20 +21,36 @@ export default function Carrousel({
 
   // Effects
   useEffect(() => {
-    cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
-      paddingLeft: -4,
-      paddingRight: -4
-    });
-  }, [projectsGroupRef.current]);
+    // Make te progress bar disappear after load
+    const unsubscribePhase = useAppStore.subscribe(
+      (state) => state.phase,
+      (phase) => {
+        if (phase === "ready") {
+          // Delaying camera mouvement to let some time for the clouds and sticker out animations
+          setTimeout(() => {
+            cameraControlsRef.current.smoothTime = 0.5;
+            cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
+              paddingLeft: -2,
+              paddingRight: -2
+            });
+          }, 1000);
+        }
+      }
+    );
+
+    return () => {
+      unsubscribePhase();
+    };
+  }, []);
 
   return (
     <ScrollControls
+      prepend
       infinite
       pages={4}
-      prepend
       style={{ scrollbarWidth: "none" }}
     >
-      <group position={[0, 0, -(radius + 2)]} ref={projectsGroupRef}>
+      <group position={[0, 0, -50]} ref={projectsGroupRef}>
         {projects.map((project, index) => (
           <Card
             key={`img-${index}`}

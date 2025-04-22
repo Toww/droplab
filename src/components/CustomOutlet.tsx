@@ -40,7 +40,7 @@ export default function CustomOutlet() {
         }
       });
 
-      // Reset previous and next projects if path not related to projects
+      // Set project navigation to null if path isn't related to projects
       if (!location.pathname.includes("projects")) {
         updateProjectNav(null);
       }

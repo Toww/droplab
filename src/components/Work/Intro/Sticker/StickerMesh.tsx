@@ -71,13 +71,8 @@ const StickerMesh = memo(() => {
   });
 
   // Frame loop
-  useFrame((state) => {
-    const { clock } = state;
-    uniforms.uTime.value = clock.getElapsedTime();
-    // -----
-    // TODO - Implement real loading progress
-    // -----
-    uniforms.uLoadingProgress.value += 0.002;
+  useFrame((_, delta) => {
+    uniforms.uTime.value += delta;
   });
 
   return (

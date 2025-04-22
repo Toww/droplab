@@ -38,10 +38,16 @@ export default function Sticker() {
       (value) => {
         if (value === "ready") {
           gsap.to(stickerRef.current.position, {
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.out"
+          });
+          gsap.to(stickerRef.current.position, {
             x: -8,
             y: -4,
             z: 10,
-            duration: 3,
+
+            duration: 1,
             ease: "power2.in"
           });
         }
@@ -63,6 +69,8 @@ export default function Sticker() {
     const stickerY = (pointer.y * viewport.height) / 2;
 
     if (phase === "loading") {
+      console.log(stickerRef.current.position);
+      console.log(phase);
       gsap.to(stickerRef.current.position, {
         x: stickerX,
         y: stickerY,

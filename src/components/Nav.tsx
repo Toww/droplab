@@ -6,7 +6,7 @@ import ArrowIcon from "@assets/arrow.svg?react";
 
 export default function Nav() {
   // Refs
-  const NavContainer = useRef<HTMLDivElement>(null!);
+  const NavContainerRef = useRef<HTMLDivElement>(null!);
   const contactLinkRef = useRef<HTMLAnchorElement>(null);
 
   // Getters
@@ -24,46 +24,66 @@ export default function Nav() {
     contactLinkRef.current?.setAttribute("href", link);
   }, []);
 
+  // Fade in
   useEffect(() => {
     const unsubscribePhase = useAppStore.subscribe(
       (state) => state.phase,
       (phase) => {
-        if (phase === "ready") {
-          gsap.to(NavContainer.current, {
-            opacity: 1.0,
-            duration: 3
-          });
-        }
+        if (phase === "ready")
+          gsap.fromTo(
+            NavContainerRef.current,
+            { opacity: 0 },
+            {
+              opacity: 1,
+              duration: 3
+            }
+          );
       }
     );
 
     return () => {
       unsubscribePhase();
     };
-  });
+  }, []);
 
   return (
     <>
-      {/* -- Header -- */}
-      <nav className="fixed top-5 z-50 grid w-full grid-cols-3 items-center px-6 font-light">
-        <div className="text-left">
-          <NavLink to="/" className={(isActive) => getNavLinkClasses(isActive)}>
-            Work
-          </NavLink>
-        </div>
-        <NavLink
-          to="/"
-          className="text-center text-[32px] leading-0 font-extrabold"
-        >
-          Drop
-        </NavLink>
-        <div className="text-right">
+      <nav ref={NavContainerRef} style={{ opacity: 0 }}>
+        {/* -- Header -- */}
+        <div className="fixed top-5 z-50 grid w-full grid-cols-3 items-center px-6 font-light">
+          <div className="text-left">
+            <NavLink
+              to="/"
+              className={(isActive) => getNavLinkClasses(isActive)}
+            >
+              Work
+            </NavLink>
+          </div>
           <NavLink
-            to="/about"
-            className={(isActive) => getNavLinkClasses(isActive)}
+            to="/"
+            className="text-center text-[32px] leading-0 font-extrabold"
           >
-            About
+            Drop
           </NavLink>
+          <div className="text-right">
+            <NavLink
+              to="/about"
+              className={(isActive) => getNavLinkClasses(isActive)}
+            >
+              About
+            </NavLink>
+          </div>
+        </div>
+
+        {/* -- Footer -- */}
+        <div className="fixed bottom-6 z-50 flex w-full items-baseline justify-between px-6 font-light">
+          <a ref={contactLinkRef} className="leading-0 hover:underline">
+            Contact
+          </a>
+          <div className="flex items-center gap-2 text-xs">
+            <p>Available for hire</p>
+            <div className="size-2 rounded-full bg-green-500"></div>
+          </div>
         </div>
       </nav>
 
@@ -86,17 +106,6 @@ export default function Nav() {
           </div>
         </div>
       )}
-
-      {/* -- Footer -- */}
-      <div className="fixed bottom-6 z-50 flex w-full items-baseline justify-between px-6 font-light">
-        <a ref={contactLinkRef} className="leading-0 hover:underline">
-          Contact
-        </a>
-        <div className="flex items-center gap-2 text-xs">
-          <p>Available for hire</p>
-          <div className="size-2 rounded-full bg-green-500"></div>
-        </div>
-      </div>
     </>
   );
 }

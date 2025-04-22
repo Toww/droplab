@@ -3,11 +3,10 @@ import { Perf } from "r3f-perf";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import CameraControlsSource from "camera-controls";
-import useAppStore from "@stores/useAppStore";
 import Fog from "@components/Work/Fog";
+import Intro from "@components/Work/Intro";
 import Lights from "@components/Work/Lights";
-import Clouds from "@components/Work/Clouds";
-import Sticker from "@components/Work/Sticker";
+import useAppStore from "@stores/useAppStore";
 import Carrousel from "@components/Work/Carrousel";
 import ProjectTitle from "@components/Work/Carrousel/ProjectTitle";
 
@@ -45,8 +44,7 @@ export default function Work() {
           <Fog near={2} far={25} />
 
           {/* -- Intro -- */}
-          {/* <Sticker /> */}
-          {/* <Clouds /> */}
+          <Intro />
 
           {/* -- Projects List -- */}
           <Carrousel cameraControlsRef={cameraControlsRef} />
