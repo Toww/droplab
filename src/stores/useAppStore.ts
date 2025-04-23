@@ -5,13 +5,16 @@ import projectsList, { TProject } from "@projects/projectsList";
 type AppStoreState = {
   showPerf: boolean;
   projects: TProject[];
-  previousProject: TProject | null;
+  introLength: number;
   nextProject: TProject | null;
+  introStartTime: number | null;
   hoveredProject: TProject | null;
-  phase: "loading" | "ready" | null;
+  previousProject: TProject | null;
+  phase: "loading" | "intro" | "ready" | null;
 };
 
 type AppStoreActions = {
+  endIntro: () => void;
   endLoading: () => void;
   startLoading: () => void;
   updateShowPerf: () => void;
@@ -24,8 +27,10 @@ export default create<AppStoreState & AppStoreActions>()(
     phase: null,
     showPerf: false,
     nextProject: null,
-    previousProject: null,
+    introLength: 5000,
+    introStartTime: null,
     hoveredProject: null,
+    previousProject: null,
     projects: projectsList,
     startLoading: () =>
       set((state) => {
@@ -37,6 +42,13 @@ export default create<AppStoreState & AppStoreActions>()(
     endLoading: () =>
       set((state) => {
         if (state.phase === "loading") {
+          return { phase: "intro", introStartTime: new Date().getTime() };
+        }
+        return {};
+      }),
+    endIntro: () =>
+      set((state) => {
+        if (state.phase === "intro") {
           return { phase: "ready" };
         }
         return {};

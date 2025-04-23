@@ -1,4 +1,4 @@
-uniform float uLoadingProgress;
+uniform float uTimerProgress;
 
 varying vec2 vUv;
 
@@ -24,7 +24,7 @@ void main() {
     float normalizedAngle = ((angle + PI) / (2.0 * PI));
 
     // Subtracting normalized angle to show the progress clockwise, and applying the ring.
-    float loadingRing = step(1.0 - normalizedAngle, uLoadingProgress) * ringBase;
+    float loadingRing = step(1.0 - normalizedAngle, uTimerProgress) * ringBase;
 
     // Background
     vec3 backgroundColor = vec3(0,0,0);

@@ -1,10 +1,8 @@
-import gsap from "gsap";
 import * as THREE from "three";
 import { useControls } from "leva";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Clouds, Cloud } from "@react-three/drei";
-import useAppStore from "@stores/useAppStore";
 
 export default function CloudsComponent() {
   // Refs
@@ -34,25 +32,6 @@ export default function CloudsComponent() {
         step: 0.001
       }
     });
-
-  // Effects
-  useEffect(() => {
-    const unsubscribePhase = useAppStore.subscribe(
-      (state) => state.phase,
-      (phase) => {
-        if (phase === "ready") {
-          gsap.to((cloudsRef.current.children[1] as THREE.Mesh).material, {
-            opacity: 0,
-            duration: 1
-          });
-        }
-      }
-    );
-
-    return () => {
-      unsubscribePhase();
-    };
-  }, []);
 
   // Frame loop
   useFrame((_, delta) => {

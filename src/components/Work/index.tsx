@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import CameraControlsSource from "camera-controls";
 import Fog from "@components/Work/Fog";
-import Intro from "@components/Work/Intro";
+import Intro from "@components/Work/Intro/";
 import Lights from "@components/Work/Lights";
 import useAppStore from "@stores/useAppStore";
 import Carrousel from "@components/Work/Carrousel";

@@ -3,10 +3,10 @@ import * as THREE from "three";
 import { useGSAP } from "@gsap/react";
 import { useNavigate } from "react-router";
 import { useFrame } from "@react-three/fiber";
-import { useRef, RefObject, useMemo, useState, useEffect } from "react";
+import { useRef, RefObject, useMemo, useState } from "react";
 import { Image, ImageProps, Float, useScroll } from "@react-three/drei";
-import { getCardConfig } from "./config";
 import useAppStore from "@stores/useAppStore";
+import { getCardConfig } from "@components/Work/Carrousel/config";
 
 type TCard = {
   url: string;

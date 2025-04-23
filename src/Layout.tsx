@@ -2,7 +2,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import Nav from "@components/Nav";
 import Debug from "@components/Debug";
-import LoadingBar from "@components/LoadingBar";
+import LoadingScreen from "@components/LoadingBar";
 import CustomOutlet from "@components/CustomOutlet";
 
 function Layout() {
@@ -16,7 +16,7 @@ function Layout() {
       <Nav />
 
       {/* Loading Components */}
-      <LoadingBar />
+      <LoadingScreen />
 
       {/* React-router's Outlet with page transitions */}
       <CustomOutlet />
