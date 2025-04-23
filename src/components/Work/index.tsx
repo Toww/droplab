@@ -15,6 +15,7 @@ export default function Work() {
   const cameraControlsRef = useRef<CameraControls>(null!);
 
   // Hooks
+  const phase = useAppStore((state) => state.phase);
   const showPerf = useAppStore((state) => state.showPerf);
 
   return (
@@ -44,7 +45,7 @@ export default function Work() {
           <Fog near={2} far={25} />
 
           {/* -- Intro -- */}
-          <Intro />
+          {phase !== "ready" && <Intro />}
 
           {/* -- Projects List -- */}
           <Carrousel cameraControlsRef={cameraControlsRef} />

@@ -91,8 +91,7 @@ export default function Card({
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 0.3,
-          delay: 1
+          duration: 0.3
         }
       );
     }

@@ -1,13 +1,16 @@
 import * as THREE from "three";
 import { useControls } from "leva";
-import { useRef } from "react";
+import { useRef, RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Clouds, Cloud } from "@react-three/drei";
 
-export default function CloudsComponent() {
+type TProps = {
+  ref: RefObject<THREE.Group>;
+};
+
+export default function CloudsComponent({ ref }: TProps) {
   // Refs
   const cloudRef = useRef<THREE.Group>(null!);
-  const cloudsRef = useRef<THREE.Group>(null!);
 
   // Leva
   const { volume, segments, color, opacity, showClouds, position } =
@@ -35,11 +38,11 @@ export default function CloudsComponent() {
 
   // Frame loop
   useFrame((_, delta) => {
-    cloudRef.current.position.z += 7 * delta;
+    cloudRef.current.position.z += delta * 7;
   });
 
   return showClouds ? (
-    <Clouds ref={cloudsRef}>
+    <Clouds ref={ref}>
       <Cloud
         speed={0.2}
         color={color}

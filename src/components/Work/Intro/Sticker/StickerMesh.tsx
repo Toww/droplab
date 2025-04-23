@@ -11,13 +11,7 @@ import stickerFragmentShader from "@shaders/sticker/fragment.glsl";
 
 const StickerMesh = memo(() => {
   // Leva
-  const { uTimerProgress, uWobbleFactor } = useControls("Sticker", {
-    uTimerProgress: {
-      value: 0.1,
-      min: 0,
-      max: 1,
-      step: 0.001
-    },
+  const { uWobbleFactor } = useControls("Sticker", {
     uWobbleFactor: {
       value: 1,
       min: 0,
@@ -39,6 +33,12 @@ const StickerMesh = memo(() => {
   // Hooks
   const introLength = useAppStore((state) => state.introLength);
   const introStartTime = useAppStore((state) => state.introStartTime);
+
+  // Getters
+  const getTimerProgress = (introLength: number, introStartTime: number) => {
+    return (new Date().getTime() - introStartTime) / introLength;
+  };
+
   // Textures
   const textureLoader = new THREE.TextureLoader();
   const headTexture = textureLoader.load("./head-spritesheet.png");
@@ -50,7 +50,9 @@ const StickerMesh = memo(() => {
   const uniforms = {
     uTime: new THREE.Uniform(0),
     uWobbleFactor: new THREE.Uniform(uWobbleFactor),
-    uTimerProgress: new THREE.Uniform(uTimerProgress)
+    uTimerProgress: new THREE.Uniform(
+      getTimerProgress(introLength, introStartTime)
+    )
   };
 
   // Materials
@@ -79,15 +81,11 @@ const StickerMesh = memo(() => {
     // Updating uTime
     uniforms.uTime.value += delta;
 
-    // Updating timer progress
-    if (introStartTime) {
-      const timerProgress =
-        (new Date().getTime() - introStartTime) / introLength;
-
-      if (timerProgress < 1) {
-        stickerMaterial.uniforms.uTimerProgress.value = timerProgress;
-      }
-    }
+    // Updating material's uTimerProgress
+    stickerMaterial.uniforms.uTimerProgress.value = getTimerProgress(
+      introLength,
+      introStartTime
+    );
   });
 
   return (

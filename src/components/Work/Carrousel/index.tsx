@@ -10,7 +10,7 @@ type TCarrouselProps = {
 };
 
 export default function Carrousel({
-  radius = 10,
+  radius = 8,
   cameraControlsRef
 }: TCarrouselProps) {
   // Refs
@@ -26,14 +26,11 @@ export default function Carrousel({
       (state) => state.phase,
       (phase) => {
         if (phase === "ready") {
-          // Delaying camera mouvement to let some time for the clouds and sticker out animations
-          setTimeout(() => {
-            cameraControlsRef.current.smoothTime = 0.5;
-            cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
-              paddingLeft: -2,
-              paddingRight: -2
-            });
-          }, 1000);
+          cameraControlsRef.current.smoothTime = 0.3;
+          cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
+            paddingLeft: -4,
+            paddingRight: -4
+          });
         }
       }
     );

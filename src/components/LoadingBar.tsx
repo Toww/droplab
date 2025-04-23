@@ -45,8 +45,8 @@ export default function LoadingScreen() {
       endLoading();
       gsap.to(loaderScreenRef.current, {
         opacity: 0,
-        duration: 1,
-        delay: 1
+        duration: 1.5,
+        delay: 0.7
       });
     }
   }, [loading.progress, loading.loaded]);
@@ -58,9 +58,9 @@ export default function LoadingScreen() {
       className="test pointer-events-none fixed z-50 flex h-screen w-screen items-center justify-center bg-white"
     >
       <div className="w-full text-right text-xs text-stone-700">
-        <div className="mr-6 mb-1">{`${Math.round(loading.progress)}%`}</div>
+        <div className="mr-6 mb-2">{`${Math.round(loading.progress)}%`}</div>
         <div className="h-0.5 w-full bg-stone-200">
-          <div ref={loaderProgressBarRef} className="h-full w-0 bg-stone-800" />
+          <div ref={loaderProgressBarRef} className="h-full w-0 bg-stone-700" />
         </div>
       </div>
     </div>

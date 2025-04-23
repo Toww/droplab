@@ -1,15 +1,14 @@
-import { gsap } from "gsap";
-import { useRef } from "react";
 import * as THREE from "three";
+import { RefObject } from "react";
 import { useControls } from "leva";
 import { Float } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
 import StickerMesh from "./StickerMesh";
 
-export default function Sticker() {
-  // Ref
-  const stickerRef = useRef<THREE.Group>(null!);
+type TProps = {
+  ref: RefObject<THREE.Group>;
+};
 
+export default function Sticker({ ref }: TProps) {
   // Leva
   const { floatSpeed, floatRotationIntensity, floatingRange } = useControls(
     "Sticker",
@@ -30,24 +29,8 @@ export default function Sticker() {
     }
   );
 
-  // Frame loop
-  useFrame((state) => {
-    const { pointer, viewport } = state;
-
-    const stickerX = (pointer.x * viewport.width) / 2;
-    const stickerY = (pointer.y * viewport.height) / 2;
-
-    gsap.to(stickerRef.current.position, {
-      x: stickerX,
-      y: stickerY,
-      duration: 0.2,
-      ease: "power2.out",
-      overwrite: true
-    });
-  });
-
   return (
-    <group ref={stickerRef}>
+    <group ref={ref} position={[0, 0, -2]}>
       <Float
         floatIntensity={1}
         speed={floatSpeed}

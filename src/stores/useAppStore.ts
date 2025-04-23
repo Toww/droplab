@@ -7,7 +7,7 @@ type AppStoreState = {
   projects: TProject[];
   introLength: number;
   nextProject: TProject | null;
-  introStartTime: number | null;
+  introStartTime: number;
   hoveredProject: TProject | null;
   previousProject: TProject | null;
   phase: "loading" | "intro" | "ready" | null;
@@ -27,8 +27,8 @@ export default create<AppStoreState & AppStoreActions>()(
     phase: null,
     showPerf: false,
     nextProject: null,
-    introLength: 5000,
-    introStartTime: null,
+    introLength: 6000,
+    introStartTime: 0,
     hoveredProject: null,
     previousProject: null,
     projects: projectsList,
