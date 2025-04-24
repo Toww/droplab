@@ -3,6 +3,7 @@ import { useRef, useEffect, RefObject } from "react";
 import { ScrollControls, CameraControls } from "@react-three/drei";
 import Card from "./Card";
 import useAppStore from "@stores/useAppStore";
+import { subscribeWithSelector } from "zustand/middleware";
 
 type TCarrouselProps = {
   radius?: number;
@@ -17,26 +18,42 @@ export default function Carrousel({
   const projectsGroupRef = useRef<THREE.Group>(null!);
 
   // Hooks
+  const phase = useAppStore((state) => state.phase);
   const projects = useAppStore((state) => state.projects);
+
+  // Handlers
+  const handleCameraControls = () => {
+    cameraControlsRef.current.smoothTime = 0.3;
+    cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
+      paddingLeft: -4,
+      paddingRight: -4
+    });
+  };
 
   // Effects
   useEffect(() => {
-    // Make te progress bar disappear after load
-    const unsubscribePhase = useAppStore.subscribe(
-      (state) => state.phase,
-      (phase) => {
-        if (phase === "ready") {
-          cameraControlsRef.current.smoothTime = 0.3;
-          cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
-            paddingLeft: -4,
-            paddingRight: -4
-          });
+    // When component is loaded
+    if (phase === "ready") {
+      handleCameraControls();
+    }
+
+    // On phase change
+    let unsubscribePhase = null;
+    if (location.pathname === "/") {
+      unsubscribePhase = useAppStore.subscribe(
+        (state) => state.phase,
+        (currentPhase) => {
+          if (currentPhase === "ready") {
+            handleCameraControls();
+          }
         }
-      }
-    );
+      );
+    }
 
     return () => {
-      unsubscribePhase();
+      if (unsubscribePhase) {
+        unsubscribePhase();
+      }
     };
   }, []);
 

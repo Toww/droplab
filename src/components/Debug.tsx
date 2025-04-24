@@ -1,7 +1,7 @@
 import { Leva, useControls } from "leva";
+import { useLocation } from "react-router";
 import { useState, useEffect } from "react";
 import useAppStore from "@stores/useAppStore";
-import { useLocation } from "react-router";
 
 export default function Debug() {
   // States
@@ -9,9 +9,9 @@ export default function Debug() {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
 
   // Hooks
+  const location = useLocation();
   const showPerf = useAppStore((state) => state.showPerf);
   const updateShowPerf = useAppStore((state) => state.updateShowPerf);
-  const location = useLocation();
 
   // Effects
   useEffect(() => {
