@@ -2,8 +2,8 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import Nav from "@components/Nav";
 import Debug from "@components/Debug";
-import LoadingScreen from "@components/LoadingBar";
 import CustomOutlet from "@components/CustomOutlet";
+import LoadingScreen from "@components/LoadingScreen";
 
 function Layout() {
   // GSAP Plugins

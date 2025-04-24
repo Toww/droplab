@@ -33,12 +33,8 @@ export default function ProjectDetails() {
   }, [projectTypeRef.current, project.imgFiles]);
 
   useEffect(() => {
-    const prevProject = projects[projectIndex - 1];
-    const nextProject = projects[projectIndex + 1];
     // Update previous and next project links
-    if (prevProject || nextProject) {
-      updateProjectNav(projectIndex);
-    }
+    updateProjectNav(projectIndex);
   }, [projectIndex]);
 
   // Getters

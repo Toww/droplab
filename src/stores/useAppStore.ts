@@ -15,9 +15,9 @@ type AppStoreState = {
 
 type AppStoreActions = {
   endIntro: () => void;
-  endLoading: () => void;
   startLoading: () => void;
   updateShowPerf: () => void;
+  endLoading: (location: string) => void;
   updateProjectNav: (projectIndex: number | null) => void;
   updateHoveredProject: (projectIndex: number | null) => void;
 };
@@ -39,10 +39,14 @@ export default create<AppStoreState & AppStoreActions>()(
         }
         return {};
       }),
-    endLoading: () =>
+    endLoading: (location) =>
       set((state) => {
-        if (state.phase === "loading") {
+        if (state.phase === "loading" && location === "/") {
           return { phase: "intro", introStartTime: new Date().getTime() };
+        } else if (state.phase === "loading") {
+          return {
+            phase: "ready"
+          };
         }
         return {};
       }),
@@ -70,9 +74,27 @@ export default create<AppStoreState & AppStoreActions>()(
     updateProjectNav: (projectIndex) => {
       if (projectIndex !== null) {
         set((state) => {
+          const projects = state.projects;
+
+          const getPreviousProject = () => {
+            if (projectIndex === 0) {
+              return projects[projects.length - 1];
+            } else {
+              return projects[projectIndex - 1];
+            }
+          };
+
+          const getNextProject = () => {
+            if (projectIndex === projects.length - 1) {
+              return projects[0];
+            } else {
+              return projects[projectIndex + 1];
+            }
+          };
+
           return {
-            nextProject: state.projects[projectIndex + 1] || null,
-            previousProject: state.projects[projectIndex - 1] || null
+            nextProject: getNextProject(),
+            previousProject: getPreviousProject()
           };
         });
       } else {

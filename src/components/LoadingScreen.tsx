@@ -1,6 +1,7 @@
 import gsap from "gsap";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
+import { useLocation } from "react-router";
 import { useProgress } from "@react-three/drei";
 import useAppStore from "@stores/useAppStore";
 
@@ -8,10 +9,11 @@ export default function LoadingScreen() {
   // Refs
   const loaderScreenRef = useRef<HTMLDivElement>(null!);
   const loaderProgressBarRef = useRef<HTMLDivElement>(null!);
+  const loaderBarContainerRef = useRef<HTMLDivElement>(null!);
 
   // Hooks
   const loading = useProgress();
-
+  const location = useLocation();
   // Hooks
   const phase = useAppStore((state) => state.phase);
   const startLoading = useAppStore((state) => state.startLoading);
@@ -22,7 +24,7 @@ export default function LoadingScreen() {
     if (phase === null) {
       startLoading();
       gsap.fromTo(
-        loaderScreenRef.current,
+        loaderBarContainerRef.current,
         { opacity: 0 },
         {
           opacity: 1,
@@ -42,7 +44,7 @@ export default function LoadingScreen() {
 
     // Loading end
     if (loading.loaded) {
-      endLoading();
+      endLoading(location.pathname);
       gsap.to(loaderScreenRef.current, {
         opacity: 0,
         duration: 1.5,
@@ -54,11 +56,10 @@ export default function LoadingScreen() {
   return (
     <div
       ref={loaderScreenRef}
-      style={{ opacity: 0 }}
       className="test pointer-events-none fixed z-50 flex h-screen w-screen items-center justify-center bg-white"
     >
-      <div className="w-full text-right text-xs text-stone-700">
-        <div className="mr-6 mb-2">{`${Math.round(loading.progress)}%`}</div>
+      <div ref={loaderBarContainerRef} className="w-full opacity-0">
+        <div className="mr-6 mb-2 text-right text-xs text-stone-700">{`${Math.round(loading.progress)}%`}</div>
         <div className="h-0.5 w-full bg-stone-200">
           <div ref={loaderProgressBarRef} className="h-full w-0 bg-stone-700" />
         </div>

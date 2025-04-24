@@ -30,6 +30,7 @@ export default function ProjectImages({
               {imgFileNumbers.map((num) => {
                 return (
                   <img
+                    key={`img-${num}`}
                     className="rounded"
                     src={`/images/${project.id}/${num}.jpg`}
                     alt={`${project.title} picture ${num}`}
