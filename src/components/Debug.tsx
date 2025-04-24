@@ -1,6 +1,7 @@
 import { Leva, useControls } from "leva";
 import { useState, useEffect } from "react";
 import useAppStore from "@stores/useAppStore";
+import { useLocation } from "react-router";
 
 export default function Debug() {
   // States
@@ -10,14 +11,13 @@ export default function Debug() {
   // Hooks
   const showPerf = useAppStore((state) => state.showPerf);
   const updateShowPerf = useAppStore((state) => state.updateShowPerf);
+  const location = useLocation();
 
   // Effects
   useEffect(() => {
     // TODO - Refactor with React Router
     // Checking for debug hash in the URL
-    window.location.hash === "#debug"
-      ? setShowDebug(true)
-      : setShowDebug(false);
+    location.hash === "#debug" ? setShowDebug(true) : setShowDebug(false);
 
     // Preventing a bug in Leva where height of the debug tools
     // can be wrong (https://github.com/pmndrs/leva/issues/456)
@@ -28,7 +28,7 @@ export default function Debug() {
     return () => {
       clearTimeout(timeoutID);
     };
-  }, [window.location.hash]);
+  }, [location.hash]);
 
   // Leva
   useControls("Performances", {
