@@ -6,7 +6,7 @@ import ArrowIcon from "@assets/arrow.svg?react";
 
 export default function Nav() {
   // Refs
-  const NavContainerRef = useRef<HTMLDivElement>(null!);
+  const navContainerRef = useRef<HTMLDivElement>(null!);
   const contactLinkRef = useRef<HTMLAnchorElement>(null);
 
   // Getters
@@ -17,6 +17,7 @@ export default function Nav() {
   // Hooks
   const nextProject = useAppStore((state) => state.nextProject);
   const previousProject = useAppStore((state) => state.previousProject);
+  const updateNavDirection = useAppStore((state) => state.updateNavDirection);
 
   // Adding obfuscated link on first load
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function Nav() {
       (phase) => {
         if (phase === "ready")
           gsap.fromTo(
-            NavContainerRef.current,
+            navContainerRef.current,
             { opacity: 0 },
             {
               opacity: 1,
@@ -48,12 +49,13 @@ export default function Nav() {
 
   return (
     <>
-      <nav ref={NavContainerRef} style={{ opacity: 0 }}>
+      <nav ref={navContainerRef} style={{ opacity: 0 }}>
         {/* -- Header -- */}
-        <div className="fixed top-5 z-50 grid w-full grid-cols-3 items-center px-6 font-light">
+        <div className="fixed top-5 z-40 grid w-full grid-cols-3 items-center px-6 font-light">
           <div className="text-left">
             <NavLink
               to="/"
+              onClick={() => updateNavDirection(null)}
               className={(isActive) => getNavLinkClasses(isActive)}
             >
               Work
@@ -61,6 +63,7 @@ export default function Nav() {
           </div>
           <NavLink
             to="/"
+            onClick={() => updateNavDirection(null)}
             className="text-center text-[32px] leading-0 font-extrabold"
           >
             Drop
@@ -68,6 +71,7 @@ export default function Nav() {
           <div className="text-right">
             <NavLink
               to="/about"
+              onClick={() => updateNavDirection(null)}
               className={(isActive) => getNavLinkClasses(isActive)}
             >
               About
@@ -89,18 +93,24 @@ export default function Nav() {
 
       {/* -- Project navigation -- */}
       {previousProject && (
-        <div className="fixed left-6 h-screen w-6 content-center text-stone-500">
+        <div className="fixed left-6 z-30 h-screen w-6 content-center text-stone-500">
           <div>
-            <NavLink to={`/projects/${previousProject.id}`}>
+            <NavLink
+              to={`/projects/${previousProject.id}`}
+              onClick={() => updateNavDirection("left")}
+            >
               <ArrowIcon />
             </NavLink>
           </div>
         </div>
       )}
       {nextProject && (
-        <div className="fixed right-6 h-screen w-6 content-center text-stone-500">
+        <div className="fixed right-6 z-30 h-screen w-6 content-center text-stone-500">
           <div>
-            <NavLink to={`/projects/${nextProject.id}`}>
+            <NavLink
+              to={`/projects/${nextProject.id}`}
+              onClick={() => updateNavDirection("right")}
+            >
               <ArrowIcon className="scale-x-[-1]" />
             </NavLink>
           </div>

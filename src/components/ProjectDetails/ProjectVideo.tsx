@@ -6,7 +6,7 @@ type TProps = {
 
 export default function ({ video }: TProps) {
   return (
-    <div className="relative mt-0 max-h-screen w-full">
+    <div className="gsap-stagger relative mt-0 max-h-screen w-full">
       <iframe
         className="absolute top-0 left-0 h-full w-full border-0"
         src={video.src}

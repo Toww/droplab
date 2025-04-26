@@ -1,71 +1,159 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { JSX, useRef, useState } from "react";
 import { useLocation, useOutlet } from "react-router";
+import { JSX, useEffect, useRef, useState } from "react";
 import useAppStore from "@stores/useAppStore";
 
 export default function CustomOutlet() {
-  // States
-  const [displayOutlet, setDisplayOutlet] = useState<JSX.Element | null>(null);
-
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
-  const previousLocationPathname = useRef<string | null>(null);
+  const navDirectionRef = useRef<string | null>(null);
+  const displayedLocationRef = useRef<string | null>(null);
+
+  // States
+  const [displayOutlet, setDisplayOutlet] = useState<JSX.Element | null>(null);
 
   // Hooks
   const location = useLocation();
   const currentOutlet = useOutlet();
   const updateProjectNav = useAppStore((state) => state.updateProjectNav);
 
-  useGSAP(() => {
-    const animDuration = 0.5;
+  // Effects
+  useEffect(() => {
+    const unsubNavDir = useAppStore.subscribe(
+      (state) => state.navDirection,
+      (navDir) => {
+        navDirectionRef.current = navDir;
+      }
+    );
 
-    if (
-      previousLocationPathname.current &&
-      previousLocationPathname.current !== location.pathname
-    ) {
-      // On path change, animate current component out
-      gsap.to(containerRef.current, {
-        opacity: 0,
-        duration: animDuration,
-        onComplete: () => {
-          // After animation out, display new path's component
-          // and update previous location pathname.
-          setDisplayOutlet(currentOutlet);
-          gsap.to(containerRef.current, {
+    return () => {
+      unsubNavDir();
+    };
+  }, []);
+
+  // GSAP
+  useGSAP(
+    () => {
+      // -- Variables --
+      const animDuration = 0.5;
+      const isDisplayedLocationRefProject =
+        displayedLocationRef.current?.includes("projects");
+      const isNextLocationProject = location.pathname.includes("projects");
+
+      // -- Animations --
+      const containerFadeIn = () => {
+        gsap.fromTo(
+          containerRef.current,
+          {
+            opacity: 0
+          },
+          {
             opacity: 1,
             duration: animDuration
-          });
-          previousLocationPathname.current = location.pathname;
-        }
-      });
+          }
+        );
+      };
 
-      // Set project navigation to null if path isn't related to projects
-      if (!location.pathname.includes("projects")) {
-        updateProjectNav(null);
+      const containerFadeOutIn = () => {
+        gsap.to(containerRef.current, {
+          opacity: 0,
+          duration: animDuration,
+          onComplete: () => {
+            // After animation out, display new path's component
+            setDisplayOutlet(currentOutlet);
+            // -- Container --
+            gsap.to(containerRef.current, {
+              opacity: 1,
+              duration: animDuration
+            });
+            // After new component in, set new displayed location pathname.
+            displayedLocationRef.current = location.pathname;
+          }
+        });
+      };
+
+      const animateBetweenProjects = () => {
+        const getAnimDetails = () => {
+          switch (navDirectionRef.current) {
+            case "left":
+              return {
+                x: 100,
+                stagger: -0.1
+              };
+            case "right":
+              return {
+                x: -100,
+                stagger: 0.1
+              };
+            default:
+              return {
+                x: 0,
+                stagger: 0
+              };
+          }
+        };
+
+        gsap.fromTo(
+          ".gsap-stagger",
+          { opacity: 1 },
+          {
+            x: getAnimDetails().x,
+            stagger: getAnimDetails().stagger,
+            opacity: 0,
+            duration: 0.6,
+            onComplete: () => {
+              // After animation out, display new path's component
+              // and update previous location pathname.
+              setDisplayOutlet(currentOutlet);
+              // -- Container --
+              gsap.fromTo(
+                ".gsap-stagger",
+                { x: getAnimDetails().x * -1, opacity: 0 },
+                {
+                  opacity: 1,
+                  x: 0,
+                  stagger: getAnimDetails().stagger * -1,
+                  duration: 0.6
+                }
+              );
+              displayedLocationRef.current = location.pathname;
+            }
+          }
+        );
+      };
+
+      // -- Location changes --
+      if (
+        displayedLocationRef.current !== location.pathname &&
+        displayOutlet !== null
+      ) {
+        if (isDisplayedLocationRefProject && isNextLocationProject) {
+          // -- When current and next locations are projects
+          animateBetweenProjects();
+        } else {
+          // -- Entering or leaving projects page
+          containerFadeOutIn();
+          if (!isNextLocationProject) {
+            // Hide project navigation if next location isn't a project
+            updateProjectNav(null);
+          }
+        }
+      } else {
+        // -- Initial render
+        setDisplayOutlet(currentOutlet);
+        containerFadeIn();
+        displayedLocationRef.current = location.pathname;
       }
-    } else {
-      // Initial render
-
-      // Display current react-router's outlet with slow fade in animation
-      // and set previous location pathname
-      setDisplayOutlet(currentOutlet);
-      gsap.fromTo(
-        containerRef.current,
-        {
-          opacity: 0
-        },
-        {
-          opacity: 1,
-          duration: animDuration
-        }
-      );
-      previousLocationPathname.current = location.pathname;
+    },
+    {
+      scope: containerRef,
+      dependencies: [location.pathname]
     }
-  }, [location.pathname]);
+  );
 
   return (
-    <div ref={containerRef} style={{ opacity: 0 }}>
+    <div ref={containerRef} className="pointer-events-none opacity-0">
       {displayOutlet}
     </div>
   );

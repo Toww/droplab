@@ -2,22 +2,26 @@ import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import projectsList, { TProject } from "@projects/projectsList";
 
+export type TNavDirection = "left" | "right" | null;
+
 type AppStoreState = {
   showPerf: boolean;
   projects: TProject[];
   introLength: number;
-  nextProject: TProject | null;
   introStartTime: number;
   hoveredProject: TProject | null;
   previousProject: TProject | null;
+  nextProject: TProject | null;
+  navDirection: TNavDirection;
   phase: "loading" | "intro" | "ready" | null;
 };
 
 type AppStoreActions = {
   endIntro: () => void;
   startLoading: () => void;
-  updateShowPerf: () => void;
   endLoading: (location: string) => void;
+  updateShowPerf: () => void;
+  updateNavDirection: (direction: TNavDirection) => void;
   updateProjectNav: (projectIndex: number | null) => void;
   updateHoveredProject: (projectIndex: number | null) => void;
 };
@@ -26,11 +30,12 @@ export default create<AppStoreState & AppStoreActions>()(
   subscribeWithSelector((set) => ({
     phase: null,
     showPerf: false,
-    nextProject: null,
     introLength: 6000,
     introStartTime: 0,
     hoveredProject: null,
     previousProject: null,
+    nextProject: null,
+    navDirection: null,
     projects: projectsList,
     startLoading: () =>
       set((state) => {
@@ -71,6 +76,13 @@ export default create<AppStoreState & AppStoreActions>()(
             projectIndex !== null ? state.projects[projectIndex] : null
         };
       }),
+    updateNavDirection: (direction) => {
+      set(() => {
+        return {
+          navDirection: direction
+        };
+      });
+    },
     updateProjectNav: (projectIndex) => {
       if (projectIndex !== null) {
         set((state) => {

@@ -1,8 +1,7 @@
 import { useParams } from "react-router";
-import { Canvas } from "@react-three/fiber";
 import { JSX, useEffect, useRef, useState } from "react";
-import { Center, OrbitControls } from "@react-three/drei";
 import ProjectLinks from "./ProjectLinks";
+import ProjectModel from "./ProjectModel";
 import ProjectVideo from "./ProjectVideo";
 import ProjectImages from "./ProjectImages";
 import useAppStore from "@stores/useAppStore";
@@ -44,42 +43,28 @@ export default function ProjectDetails() {
     } else if (project.imgFiles !== undefined) {
       return <ProjectImages marginTop={imagesMarginTop} project={project} />;
     } else if (project.model !== undefined) {
-      return (
-        <div className="flex h-full w-full items-center justify-center">
-          <div className="h-full w-full">
-            <Canvas
-              flat
-              camera={{ fov: 45, near: 0.1, far: 200, position: [1, 1, 9] }}
-            >
-              <OrbitControls />
-              <color args={["#ebebeb"]} attach="background" />
-              <Center>{project.model}</Center>
-            </Canvas>
-          </div>
-        </div>
-      );
+      return <ProjectModel project={project} />;
     }
   };
 
   return (
     <>
-      {/* // Project detail */}
       <div className="mx-auto grid h-full max-w-6xl grid-cols-12 gap-x-6">
-        {/* Infos */}
+        {/* -- Infos -- */}
         <div className="sticky top-0 col-span-5 flex h-screen flex-col justify-center">
           {/* -- Type --*/}
           <div
             ref={projectTypeRef}
-            className="font-bricolage text-sm leading-none text-stone-400"
+            className="gsap-stagger font-bricolage text-sm leading-none text-stone-400"
           >
             {project?.type}
           </div>
           {/* -- Title -- */}
-          <h1 className="mt-4 font-getai text-7xl leading-18 text-amber-500">
+          <h1 className="gsap-stagger mt-4 font-getai text-7xl leading-18 text-amber-500">
             {project?.title}
           </h1>
           {/* -- Description -- */}
-          <div className="mt-8 space-y-8 text-stone-700">
+          <div className="gsap-stagger mt-8 space-y-8 text-stone-700">
             <p>{project?.description}</p>
             {/* -- Links -- */}
             {project.links && project.links.length > 0 && (
@@ -90,8 +75,10 @@ export default function ProjectDetails() {
 
         <div className="col-span-1" />
 
-        {/* // Content */}
-        <div className="col-span-6 flex">{getProjectContent()}</div>
+        {/* -- Content -- */}
+        <div className="gsap-stagger col-span-6 flex">
+          {getProjectContent()}
+        </div>
       </div>
     </>
   );
