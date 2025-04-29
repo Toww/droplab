@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { useRef, useEffect } from "react";
-import { NavLink, NavLinkRenderProps } from "react-router";
+import { NavLink, NavLinkRenderProps, useLocation } from "react-router";
 import useAppStore from "@stores/useAppStore";
 import ArrowIcon from "@assets/arrow.svg?react";
 
@@ -18,6 +18,7 @@ export default function Nav() {
   const nextProject = useAppStore((state) => state.nextProject);
   const previousProject = useAppStore((state) => state.previousProject);
   const updateNavDirection = useAppStore((state) => state.updateNavDirection);
+  const pathname = useLocation().pathname;
 
   // Adding obfuscated link on first load
   useEffect(() => {
@@ -46,6 +47,25 @@ export default function Nav() {
       unsubscribePhase();
     };
   }, []);
+
+  // Getters
+  const getFooterStatusClasses = () => {
+    const baseClasses = "items-center gap-2 text-xs";
+    const pathClasses = !pathname.includes("projects")
+      ? "flex"
+      : "hidden xl:flex";
+
+    return `${pathClasses} ${baseClasses}`;
+  };
+
+  const getFooterNavClasses = () => {
+    const baseClasses = "items-center gap-8 text-xs";
+    const pathClasses = !pathname.includes("projects")
+      ? "hidden"
+      : "flex xl:hidden";
+
+    return `${pathClasses} ${baseClasses}`;
+  };
 
   return (
     <>
@@ -81,41 +101,76 @@ export default function Nav() {
 
         {/* -- Footer -- */}
         <div className="fixed bottom-6 z-50 flex w-full items-baseline justify-between px-6 font-light">
+          {/* -- Contact */}
           <a ref={contactLinkRef} className="leading-0 hover:underline">
             Contact
           </a>
-          <div className="flex items-center gap-2 text-xs">
+          {/** Status & Tablet / mobile project nav **/}
+          {/* Show hire status most of the time, and project nav when on tablets /
+          mobile and projects page */}
+          {/* -- Status */}
+          <div className={getFooterStatusClasses()}>
             <p>Available for hire</p>
             <div className="size-2 rounded-full bg-green-500"></div>
+          </div>
+
+          {/* -- Tablet / Mobile navigation */}
+          <div className={getFooterNavClasses()}>
+            {previousProject && (
+              <div className="w-6 content-center text-stone-600">
+                <div>
+                  <NavLink
+                    to={`/projects/${previousProject.id}`}
+                    onClick={() => updateNavDirection("left")}
+                  >
+                    <ArrowIcon />
+                  </NavLink>
+                </div>
+              </div>
+            )}
+            {nextProject && (
+              <div className="w-6 content-center text-stone-600">
+                <div>
+                  <NavLink
+                    to={`/projects/${nextProject.id}`}
+                    onClick={() => updateNavDirection("right")}
+                  >
+                    <ArrowIcon className="scale-x-[-1]" />
+                  </NavLink>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </nav>
 
-      {/* -- Project navigation -- */}
-      {previousProject && (
-        <div className="fixed left-6 z-30 h-screen w-6 content-center text-stone-500">
-          <div>
-            <NavLink
-              to={`/projects/${previousProject.id}`}
-              onClick={() => updateNavDirection("left")}
-            >
-              <ArrowIcon />
-            </NavLink>
+      {/* -- Desktop - Project navigation -- */}
+      <div className="hidden bg-red-400 xl:block">
+        {previousProject && (
+          <div className="fixed left-6 z-30 h-screen w-6 content-center text-stone-600">
+            <div>
+              <NavLink
+                to={`/projects/${previousProject.id}`}
+                onClick={() => updateNavDirection("left")}
+              >
+                <ArrowIcon />
+              </NavLink>
+            </div>
           </div>
-        </div>
-      )}
-      {nextProject && (
-        <div className="fixed right-6 z-30 h-screen w-6 content-center text-stone-500">
-          <div>
-            <NavLink
-              to={`/projects/${nextProject.id}`}
-              onClick={() => updateNavDirection("right")}
-            >
-              <ArrowIcon className="scale-x-[-1]" />
-            </NavLink>
+        )}
+        {nextProject && (
+          <div className="fixed right-6 z-30 h-screen w-6 content-center text-stone-600">
+            <div>
+              <NavLink
+                to={`/projects/${nextProject.id}`}
+                onClick={() => updateNavDirection("right")}
+              >
+                <ArrowIcon className="scale-x-[-1]" />
+              </NavLink>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 }

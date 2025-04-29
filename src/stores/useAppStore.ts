@@ -30,7 +30,7 @@ export default create<AppStoreState & AppStoreActions>()(
   subscribeWithSelector((set) => ({
     phase: null,
     showPerf: false,
-    introLength: 6000,
+    introLength: 5000,
     introStartTime: 0,
     hoveredProject: null,
     previousProject: null,

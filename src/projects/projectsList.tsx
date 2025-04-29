@@ -42,7 +42,7 @@ const projectsList: TProject[] = [
     links: [
       {
         url: "https://marble-race-iota.vercel.app/",
-        text: "Play !"
+        text: "Play ! (desktop)"
       },
       {
         url: "https://github.com/Toww/marble-race",
@@ -56,9 +56,9 @@ const projectsList: TProject[] = [
     id: "bassodrome",
     type: "VJing",
     description:
-      "VJing / Mapping for the Bassodrome Festival 3.0 realised in collaboration with Benjamin Montjean.",
+      "VJing / Mapping for the Bassodrome Festival 3.0, realised in collaboration with Benjamin Montjean.",
     video: {
-      src: "https://player.vimeo.com/video/107347491?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+      src: "https://player.vimeo.com/video/107347491?h=498591ad04",
       title: "VJing / Mapping - Bassodrome Festival 3.0"
     }
   },

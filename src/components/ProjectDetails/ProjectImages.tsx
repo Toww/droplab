@@ -1,15 +1,31 @@
-import { JSX } from "react";
+import { useState, useEffect, JSX, RefObject } from "react";
 import { TProject } from "@projects/projectsList";
 
 type TProps = {
-  marginTop: number;
   project: TProject;
+  projectTypeRef: RefObject<HTMLHeadingElement | null>;
 };
 
 export default function ProjectImages({
   project,
-  marginTop
+  projectTypeRef
 }: TProps): JSX.Element {
+  // States
+  const [imagesMarginTop, setImagesMarginTop] = useState<number>(0);
+
+  // Placing images vertically on desktop
+  useEffect(() => {
+    if (
+      project.imgFiles &&
+      project.imgFiles.length > 1 &&
+      projectTypeRef.current &&
+      window.innerWidth >= 1280
+    ) {
+      setImagesMarginTop(projectTypeRef.current.getBoundingClientRect().top);
+    } else {
+    }
+  }, [projectTypeRef.current, project.imgFiles, window.innerWidth]);
+
   // Getters
   const getProjectImages = () => {
     // Mapping the list of names
@@ -29,7 +45,7 @@ export default function ProjectImages({
         return (
           <div
             key={`${project.id}-imgs-${imgLine.join("-")}`}
-            className="grid w-full max-w-full grid-cols-2 gap-6"
+            className="grid w-full max-w-full gap-6 md:grid-cols-2"
           >
             {imgLine.map((num) => {
               return (
@@ -49,8 +65,8 @@ export default function ProjectImages({
 
   return (
     <div
-      style={{ marginTop: marginTop }}
-      className="relative mb-12 w-full space-y-6"
+      style={imagesMarginTop ? { marginTop: imagesMarginTop } : undefined}
+      className={`relative mt-8 w-full space-y-6 xl:mt-0 ${project.imgFiles?.length === 1 && "content-center"}`}
     >
       {getProjectImages()}
     </div>

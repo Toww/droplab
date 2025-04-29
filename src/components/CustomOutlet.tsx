@@ -106,6 +106,7 @@ export default function CustomOutlet() {
               // After animation out, display new path's component
               // and update previous location pathname.
               setDisplayOutlet(currentOutlet);
+              window.scrollTo({ top: 0, left: 0 });
               // -- Container --
               gsap.fromTo(
                 ".gsap-stagger",
@@ -113,7 +114,7 @@ export default function CustomOutlet() {
                 {
                   opacity: 1,
                   x: 0,
-                  stagger: getAnimDetails().stagger * -1,
+                  stagger: getAnimDetails().stagger,
                   duration: 0.6
                 }
               );

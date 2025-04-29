@@ -1,5 +1,6 @@
 import { useParams } from "react-router";
-import { JSX, useEffect, useRef, useState } from "react";
+import Balancer from "react-wrap-balancer";
+import { JSX, useEffect, useRef } from "react";
 import ProjectLinks from "./ProjectLinks";
 import ProjectModel from "./ProjectModel";
 import ProjectVideo from "./ProjectVideo";
@@ -21,16 +22,6 @@ export default function ProjectDetails() {
   );
   const project = projects[projectIndex];
 
-  // States
-  const [imagesMarginTop, setImagesMarginTop] = useState<number>(0);
-
-  // Effects
-  useEffect(() => {
-    if (projectTypeRef.current && project.imgFiles) {
-      setImagesMarginTop(projectTypeRef.current.getBoundingClientRect().top);
-    }
-  }, [projectTypeRef.current, project.imgFiles]);
-
   useEffect(() => {
     // Update previous and next project links
     updateProjectNav(projectIndex);
@@ -41,17 +32,19 @@ export default function ProjectDetails() {
     if (project.video !== undefined) {
       return <ProjectVideo video={project.video} />;
     } else if (project.imgFiles !== undefined) {
-      return <ProjectImages marginTop={imagesMarginTop} project={project} />;
+      return (
+        <ProjectImages projectTypeRef={projectTypeRef} project={project} />
+      );
     } else if (project.model !== undefined) {
       return <ProjectModel project={project} />;
     }
   };
 
   return (
-    <>
-      <div className="mx-auto grid h-full max-w-6xl grid-cols-12 gap-x-6">
+    <div className="xl:px-18">
+      <div className="mb-12 flex h-full flex-col p-6 xl:mx-auto xl:mb-0 xl:grid xl:max-w-6xl xl:grid-cols-12 xl:gap-x-6 xl:p-0">
         {/* -- Infos -- */}
-        <div className="sticky top-0 col-span-5 flex h-screen flex-col justify-center">
+        <div className="mt-24 flex flex-col xl:sticky xl:top-0 xl:col-span-5 xl:mt-0 xl:h-screen xl:justify-center">
           {/* -- Type --*/}
           <div
             ref={projectTypeRef}
@@ -60,12 +53,16 @@ export default function ProjectDetails() {
             {project?.type}
           </div>
           {/* -- Title -- */}
-          <h1 className="gsap-stagger mt-4 font-getai text-7xl leading-18 text-amber-500">
+          <h1 className="gsap-stagger mt-4 font-getai text-5xl leading-14 wrap-break-word hyphens-auto text-amber-500 md:text-7xl md:leading-18">
             {project?.title}
           </h1>
           {/* -- Description -- */}
-          <div className="gsap-stagger mt-8 space-y-8 text-stone-700">
-            <p>{project?.description}</p>
+          <div className="gsap-stagger mt-6 space-y-6 text-stone-700">
+            <p>
+              <Balancer ratio={1} preferNative={false}>
+                {project?.description}
+              </Balancer>
+            </p>
             {/* -- Links -- */}
             {project.links && project.links.length > 0 && (
               <ProjectLinks links={project.links} />
@@ -73,13 +70,13 @@ export default function ProjectDetails() {
           </div>
         </div>
 
-        <div className="col-span-1" />
+        <div className="hidden xl:col-span-1 xl:block" />
 
         {/* -- Content -- */}
-        <div className="gsap-stagger col-span-6 flex">
+        <div className="gsap-stagger mt-0 flex xl:col-span-6">
           {getProjectContent()}
         </div>
       </div>
-    </>
+    </div>
   );
 }
