@@ -9,11 +9,6 @@ export default function Nav() {
   const navContainerRef = useRef<HTMLDivElement>(null!);
   const contactLinkRef = useRef<HTMLAnchorElement>(null);
 
-  // Getters
-  const getNavLinkClasses = ({ isActive }: NavLinkRenderProps): string => {
-    return `leading-0 hover:underline ${isActive && "underline"}`;
-  };
-
   // Hooks
   const nextProject = useAppStore((state) => state.nextProject);
   const previousProject = useAppStore((state) => state.previousProject);
@@ -49,6 +44,10 @@ export default function Nav() {
   }, []);
 
   // Getters
+  const getNavLinkClasses = ({ isActive }: NavLinkRenderProps): string => {
+    return `leading-0 hover:underline ${isActive && "underline"}`;
+  };
+
   const getFooterStatusClasses = () => {
     const baseClasses = "items-center gap-2 text-xs";
     const pathClasses = !pathname.includes("projects")
@@ -59,7 +58,7 @@ export default function Nav() {
   };
 
   const getFooterNavClasses = () => {
-    const baseClasses = "items-center gap-8 text-xs";
+    const baseClasses = "items-center gap-10 text-xs";
     const pathClasses = !pathname.includes("projects")
       ? "hidden"
       : "flex xl:hidden";
@@ -117,7 +116,7 @@ export default function Nav() {
           {/* -- Tablet / Mobile navigation */}
           <div className={getFooterNavClasses()}>
             {previousProject && (
-              <div className="w-6 content-center text-stone-600">
+              <div className="w-6 content-center text-amber-500">
                 <div>
                   <NavLink
                     to={`/projects/${previousProject.id}`}
@@ -129,7 +128,7 @@ export default function Nav() {
               </div>
             )}
             {nextProject && (
-              <div className="w-6 content-center text-stone-600">
+              <div className="w-6 content-center text-amber-500">
                 <div>
                   <NavLink
                     to={`/projects/${nextProject.id}`}
@@ -145,9 +144,9 @@ export default function Nav() {
       </nav>
 
       {/* -- Desktop - Project navigation -- */}
-      <div className="hidden bg-red-400 xl:block">
+      <div className="hidden xl:block">
         {previousProject && (
-          <div className="fixed left-6 z-30 h-screen w-6 content-center text-stone-600">
+          <div className="fixed left-6 z-30 h-screen w-6 content-center text-stone-700">
             <div>
               <NavLink
                 to={`/projects/${previousProject.id}`}
@@ -159,7 +158,7 @@ export default function Nav() {
           </div>
         )}
         {nextProject && (
-          <div className="fixed right-6 z-30 h-screen w-6 content-center text-stone-600">
+          <div className="fixed right-6 z-30 h-screen w-6 content-center text-stone-700">
             <div>
               <NavLink
                 to={`/projects/${nextProject.id}`}

@@ -12,7 +12,7 @@ export default function ProjectLinks({ links }: TProps): JSX.Element {
         <a
           target="_blank"
           href={link.url}
-          className="underline"
+          className="leading-none underline"
           key={`projectLink-${index}`}
         >
           {link.text}

@@ -56,7 +56,7 @@ export default function LoadingScreen() {
   return (
     <div
       ref={loaderScreenRef}
-      className="test pointer-events-none fixed z-50 flex h-screen w-screen items-center justify-center bg-white"
+      className="pointer-events-none fixed z-50 flex h-screen w-screen items-center justify-center bg-white"
     >
       <div ref={loaderBarContainerRef} className="w-full opacity-0">
         <div className="mr-6 mb-2 text-right text-xs text-stone-700">{`${Math.round(loading.progress)}%`}</div>
