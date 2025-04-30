@@ -10,17 +10,14 @@ function Layout() {
   gsap.registerPlugin(useGSAP);
 
   return (
-    <main id="main-container">
-      {/* TODO - Refacto Loader and include real loading data */}
+    <>
       <Debug />
       <Nav />
-
-      {/* Loading Components */}
       <LoadingScreen />
 
       {/* React-router's Outlet with page transitions */}
       <CustomOutlet />
-    </main>
+    </>
   );
 }
 

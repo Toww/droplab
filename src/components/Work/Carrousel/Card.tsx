@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { useGSAP } from "@gsap/react";
 import { useNavigate } from "react-router";
 import { useFrame } from "@react-three/fiber";
-import { useRef, RefObject, useMemo, useState } from "react";
+import { useRef, RefObject, useMemo, useState, useEffect } from "react";
 import { Image, ImageProps, Float, useScroll } from "@react-three/drei";
 import useAppStore from "@stores/useAppStore";
 import { getCardConfig } from "@components/Work/Carrousel/config";
@@ -13,6 +13,7 @@ type TCard = {
   index: number;
   radius: number;
   projectsLength: number;
+  touchOffset: RefObject<number>;
   projectsGroupRef: RefObject<THREE.Group>;
 } & ImageProps;
 
@@ -21,6 +22,7 @@ export default function Card({
   side,
   index,
   radius,
+  touchOffset,
   projectsLength
 }: TCard) {
   // Refs
@@ -33,9 +35,17 @@ export default function Card({
 
   // States
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
 
   // Getters
   const cardConfig = getCardConfig(index, projectsLength, radius);
+
+  // Effects
+  useEffect(() => {
+    if ("ontouchstart" in window) {
+      setIsTouchDevice(true);
+    }
+  }, []);
 
   // Hooks
   const scroll = useScroll();
@@ -100,7 +110,7 @@ export default function Card({
   // GSAP
   useGSAP(() => {
     // Card animation on hover
-    if (isHovered) {
+    if (isHovered && !isTouchDevice) {
       gsap.to(imgRef.current.material, {
         radius: cardConfig.radius.hovered,
         duration: cardConfig.animation.duration,
@@ -121,7 +131,7 @@ export default function Card({
         duration: cardConfig.animation.duration,
         ease: cardConfig.animation.ease
       });
-    } else {
+    } else if (!isHovered && !isTouchDevice) {
       gsap.to(imgRef.current.material, {
         radius: cardConfig.radius.initial,
         duration: cardConfig.animation.duration,
@@ -144,9 +154,17 @@ export default function Card({
 
     // Card position on scroll
     const targetXPos =
-      Math.sin((index / projectsLength - scroll.offset) * Math.PI * 2) * radius;
+      Math.sin(
+        (index / projectsLength - scroll.offset + touchOffset.current) *
+          Math.PI *
+          2
+      ) * radius;
     const targetZPos =
-      Math.cos((index / projectsLength - scroll.offset) * Math.PI * 2) * radius;
+      Math.cos(
+        (index / projectsLength - scroll.offset + touchOffset.current) *
+          Math.PI *
+          2
+      ) * radius;
 
     gsap.to(imgRef.current.position, {
       x: targetXPos,
@@ -158,7 +176,7 @@ export default function Card({
     });
 
     // When the card is not hovered, or a card is hovered but not this one
-    if (!isHovered) {
+    if (!isHovered && !isTouchDevice) {
       if (hoveredProject !== null) {
         gsap.to(imgRef.current.scale, {
           x: 4,
@@ -166,7 +184,7 @@ export default function Card({
           duration: cardConfig.animation.duration,
           ease: cardConfig.animation.ease
         });
-      } else {
+      } else if (isHovered && !isTouchDevice) {
         gsap.to(imgRef.current.scale, {
           x: cardConfig.scale.initial.x,
           y: cardConfig.scale.initial.y,

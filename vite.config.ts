@@ -10,6 +10,7 @@ export default defineConfig({
   resolve: {
     alias: {
       src: "/src",
+      "@utils": "/src/utils/",
       "@assets": "/src/assets/",
       "@stores": "/src/stores/",
       "@shaders": "/src/shaders/",

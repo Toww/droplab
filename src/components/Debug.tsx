@@ -15,7 +15,6 @@ export default function Debug() {
 
   // Effects
   useEffect(() => {
-    // TODO - Refactor with React Router
     // Checking for debug hash in the URL
     location.hash === "#debug" ? setShowDebug(true) : setShowDebug(false);
 

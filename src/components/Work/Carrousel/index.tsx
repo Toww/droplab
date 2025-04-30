@@ -6,11 +6,13 @@ import useAppStore from "@stores/useAppStore";
 
 type TCarrouselProps = {
   radius?: number;
+  touchOffset: RefObject<number>;
   cameraControlsRef: RefObject<CameraControls>;
 };
 
 export default function Carrousel({
   radius = 8,
+  touchOffset,
   cameraControlsRef
 }: TCarrouselProps) {
   // Refs
@@ -57,12 +59,7 @@ export default function Carrousel({
   }, []);
 
   return (
-    <ScrollControls
-      prepend
-      infinite
-      pages={4}
-      style={{ scrollbarWidth: "none" }}
-    >
+    <ScrollControls infinite pages={4} style={{ scrollbarWidth: "none" }}>
       <group position={[0, 0, -50]} ref={projectsGroupRef}>
         {projects.map((project, index) => (
           <Card
@@ -70,6 +67,7 @@ export default function Carrousel({
             index={index}
             radius={radius}
             side={THREE.DoubleSide}
+            touchOffset={touchOffset}
             projectsLength={projects.length}
             projectsGroupRef={projectsGroupRef}
             url={`./images/${project.id}/thumbnail.jpg`}

@@ -1,8 +1,10 @@
-import { useRef } from "react";
+import gsap from "gsap";
 import { Perf } from "r3f-perf";
+import { TouchEvent, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import CameraControlsSource from "camera-controls";
+import { clamp } from "@utils/maths";
 import Fog from "@components/Work/Fog";
 import Intro from "@components/Work/Intro/";
 import Lights from "@components/Work/Lights";
@@ -12,11 +14,26 @@ import ProjectTitle from "@components/Work/Carrousel/ProjectTitle";
 
 export default function Work() {
   // Refs
+  const lastTouch = useRef<number>(0);
+  const touchOffset = useRef<number>(0);
   const cameraControlsRef = useRef<CameraControls>(null!);
 
   // Hooks
   const phase = useAppStore((state) => state.phase);
   const showPerf = useAppStore((state) => state.showPerf);
+
+  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
+    const difference = e.touches[0].clientX - lastTouch.current;
+
+    gsap.to(touchOffset, {
+      current: touchOffset.current + clamp(difference, -30, 30) / 20,
+      duration: 0.4,
+      ease: "none",
+      overwrite: true
+    });
+
+    lastTouch.current = e.touches[0].clientX;
+  };
 
   return (
     <>
@@ -24,10 +41,10 @@ export default function Work() {
       <ProjectTitle />
 
       {/* THREE */}
-      <div className="h-screen">
+      <div onTouchMove={handleTouchMove} className="h-screen w-full">
         <Canvas shadows>
           {/* -- Perf -- */}
-          {showPerf && (
+          {showPerf === true && (
             <Perf position="top-left" showGraph={false} logsPerSecond={5} />
           )}
 
@@ -41,6 +58,11 @@ export default function Work() {
               middle: CameraControlsSource.ACTION.NONE,
               wheel: CameraControlsSource.ACTION.NONE
             }}
+            touches={{
+              one: CameraControlsSource.ACTION.NONE,
+              two: CameraControlsSource.ACTION.NONE,
+              three: CameraControlsSource.ACTION.NONE
+            }}
           />
           <Fog near={2} far={25} />
 
@@ -48,7 +70,10 @@ export default function Work() {
           {phase !== "ready" && <Intro />}
 
           {/* -- Projects List -- */}
-          <Carrousel cameraControlsRef={cameraControlsRef} />
+          <Carrousel
+            touchOffset={touchOffset}
+            cameraControlsRef={cameraControlsRef}
+          />
         </Canvas>
       </div>
     </>
