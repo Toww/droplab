@@ -38,7 +38,7 @@ const projectsList: TProject[] = [
     id: "marble",
     type: "Dev",
     description:
-      "Final project from Bruno Simon's Three.js Journey, combining some of the techniques learned through the course. It uses uses Three.js, React Three Fiber, Drei, and Rapier to handle physics.",
+      "Final project from Bruno Simon's Three.js Journey, combining some of the techniques learned through the course. It uses React, Zustand, Three.js with React Three Fiber and Drei, and Rapier to handle physics.",
     links: [
       {
         url: "https://marble-race-iota.vercel.app/",
@@ -75,6 +75,20 @@ const projectsList: TProject[] = [
       }
     ],
     imgFiles: ["01", ["02", "03"], "04", ["05", "06"], "07", ["08", "09"], "10"]
+  },
+  {
+    title: "Drop",
+    id: "drop",
+    type: "Dev | 3D",
+    description:
+      "The website you are visiting, using Typescript, React, Zustand, Three.js with React Three Fiber and Drei, GSAP and TailwindCSS.",
+    links: [
+      {
+        url: "https://github.com/Toww/droplab",
+        text: "View on Github"
+      }
+    ],
+    imgFiles: ["01"]
   }
 ];
 

@@ -105,7 +105,7 @@ export default function Nav() {
             Contact
           </a>
           {/** Status & Tablet / mobile project nav **/}
-          {/* Show hire status most of the time, and project nav when on tablets /
+          {/* Show "hire status" most of the time, and project nav when on tablets /
           mobile and projects page */}
           {/* -- Status */}
           <div className={getFooterStatusClasses()}>
