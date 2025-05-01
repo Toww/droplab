@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import { Perf } from "r3f-perf";
+// import { Perf } from "r3f-perf";
 import { TouchEvent, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
@@ -43,10 +43,10 @@ export default function Work() {
       {/* THREE */}
       <div onTouchMove={handleTouchMove} className="h-screen w-full">
         <Canvas shadows>
-          {/* -- Perf -- */}
-          {showPerf === true && (
+          {/* -- Perf -- Uncomment to allow displaying R3F perf on debug */}
+          {/* {showPerf === true && (
             <Perf position="top-left" showGraph={false} logsPerSecond={5} />
-          )}
+          )} */}
 
           {/* -- Scene Setup -- */}
           <Lights />

@@ -1,6 +1,6 @@
 # Drop lab
 
-This is my personal portfolio, developed using [Typescript](https://www.typescriptlang.org/ "https://www.typescriptlang.org/"), [React](https://react.dev/ "https://react.dev/"), [Zustand](https://zustand-demo.pmnd.rs/ "https://zustand-demo.pmnd.rs/"), [Three.js](https://threejs.org/ "https://threejs.org/") with [React Three Fiber](https://r3f.docs.pmnd.rs/ "https://r3f.docs.pmnd.rs/") and [Drei](https://drei.docs.pmnd.rs/ "https://drei.docs.pmnd.rs/"), [GSAP](https://gsap.com/ "https://gsap.com/") and [TailwindCSS](https://tailwindcss.com/ "https://tailwindcss.com/").
+This is my personal portfolio, developed using [Typescript](https://www.typescriptlang.org/ "https://www.typescriptlang.org/"), [React](https://react.dev/ "https://react.dev/"), [React Router](https://reactrouter.com/home "https://reactrouter.com/home"), [Zustand](https://zustand-demo.pmnd.rs/ "https://zustand-demo.pmnd.rs/"), [Three.js](https://threejs.org/ "https://threejs.org/") with [React Three Fiber](https://r3f.docs.pmnd.rs/ "https://r3f.docs.pmnd.rs/") and [Drei](https://drei.docs.pmnd.rs/ "https://drei.docs.pmnd.rs/"), [GSAP](https://gsap.com/ "https://gsap.com/") and [TailwindCSS](https://tailwindcss.com/ "https://tailwindcss.com/").
 
 Online version available at : [https://www.drop-lab.com](https://www.drop-lab.com "https://www.drop-lab.com").
 
