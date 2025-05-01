@@ -52,7 +52,7 @@ export default function Nav() {
     const baseClasses = "items-center gap-2 text-xs";
     const pathClasses = !pathname.includes("projects")
       ? "flex"
-      : "hidden xl:flex";
+      : "hidden lg:flex";
 
     return `${pathClasses} ${baseClasses}`;
   };
@@ -61,7 +61,7 @@ export default function Nav() {
     const baseClasses = "items-center gap-10 text-xs";
     const pathClasses = !pathname.includes("projects")
       ? "hidden"
-      : "flex xl:hidden";
+      : "flex lg:hidden";
 
     return `${pathClasses} ${baseClasses}`;
   };
@@ -144,7 +144,7 @@ export default function Nav() {
       </nav>
 
       {/* -- Desktop - Project navigation -- */}
-      <div className="hidden xl:block">
+      <div className="hidden lg:block">
         {previousProject && (
           <div className="fixed left-6 z-30 h-screen w-6 content-center text-stone-700">
             <div>

@@ -41,10 +41,10 @@ export default function ProjectDetails() {
   };
 
   return (
-    <div className="xl:px-18">
-      <div className="mb-12 flex h-full flex-col p-6 xl:mx-auto xl:mb-0 xl:grid xl:max-w-6xl xl:grid-cols-12 xl:gap-x-6 xl:p-0">
+    <div className="lg:px-18">
+      <div className="mb-12 flex h-full flex-col p-6 lg:mx-auto lg:mb-0 lg:grid lg:max-w-6xl lg:grid-cols-12 lg:gap-x-6 lg:p-0">
         {/* -- Infos -- */}
-        <div className="mt-16 flex flex-col xl:sticky xl:top-0 xl:col-span-5 xl:mt-0 xl:h-screen xl:justify-center">
+        <div className="mt-16 flex flex-col lg:sticky lg:top-0 lg:col-span-6 lg:mt-0 lg:h-screen lg:justify-center xl:col-span-5">
           {/* -- Type --*/}
           <div
             ref={projectTypeRef}
@@ -53,7 +53,7 @@ export default function ProjectDetails() {
             {project?.type}
           </div>
           {/* -- Title -- */}
-          <h1 className="gsap-stagger mt-2 font-getai text-5xl leading-14 wrap-break-word hyphens-auto text-amber-500 md:text-7xl md:leading-18 xl:mt-4">
+          <h1 className="gsap-stagger mt-2 font-getai text-5xl leading-14 wrap-break-word hyphens-auto text-amber-500 md:text-7xl md:leading-18 lg:mt-4">
             <Balancer ratio={0.5} preferNative={false}>
               {project?.title}
             </Balancer>
@@ -75,7 +75,7 @@ export default function ProjectDetails() {
         <div className="hidden xl:col-span-1 xl:block" />
 
         {/* -- Content -- */}
-        <div className="gsap-stagger mt-0 flex xl:col-span-6">
+        <div className="gsap-stagger mt-0 flex lg:col-span-6">
           {getProjectContent()}
         </div>
       </div>

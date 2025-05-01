@@ -20,7 +20,7 @@ export default function ProjectModel({ project }: TProps) {
   };
 
   return (
-    <div className="gsap-stagger mt-8 flex h-96 w-full cursor-grab items-center justify-center xl:mt-0 xl:h-full">
+    <div className="gsap-stagger mt-8 flex h-96 w-full cursor-grab items-center justify-center lg:mt-0 lg:h-full">
       <div className="h-full w-full bg-stone-100">
         <Canvas
           flat

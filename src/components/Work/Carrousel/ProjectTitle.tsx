@@ -42,7 +42,7 @@ export default function ProjectTitle() {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed z-40 hidden h-screen w-screen items-center justify-center xl:flex">
+    <div className="pointer-events-none fixed z-40 hidden h-screen w-screen items-center justify-center lg:flex">
       {/* Text block */}
       <div className="z-50 h-fit overflow-hidden p-4">
         <h1

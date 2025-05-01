@@ -7,7 +7,7 @@ type TProps = {
 export default function ({ video }: TProps) {
   return (
     <div
-      className="gsap-stagger relative mt-10 w-full xl:m-0 xl:p-0"
+      className="gsap-stagger relative mt-10 w-full lg:m-0 lg:p-0"
       style={{ paddingBottom: "56.25%" }}
     >
       <iframe

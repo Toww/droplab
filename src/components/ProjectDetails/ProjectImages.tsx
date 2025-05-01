@@ -66,7 +66,7 @@ export default function ProjectImages({
   return (
     <div
       style={imagesMarginTop ? { marginTop: imagesMarginTop } : undefined}
-      className={`relative mt-8 w-full space-y-6 xl:mt-0 ${project.imgFiles?.length === 1 && "content-center"}`}
+      className={`relative mt-8 w-full space-y-6 lg:mt-0 ${project.imgFiles?.length === 1 && "content-center"}`}
     >
       {getProjectImages()}
     </div>
