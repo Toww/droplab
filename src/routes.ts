@@ -14,7 +14,6 @@ export default createBrowserRouter([
       {
         index: true,
         Component: Work,
-        
       },
       {
         path: "projects",
@@ -22,7 +21,6 @@ export default createBrowserRouter([
           {
             index: true,
             Component: Work,
-           
           },
           {
             path: ":pid",
