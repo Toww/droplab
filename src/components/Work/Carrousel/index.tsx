@@ -24,11 +24,30 @@ export default function Carrousel({
 
   // Handlers
   const handleCameraControls = () => {
+    const windowSize = window.innerWidth;
     cameraControlsRef.current.smoothTime = 0.3;
-    cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
-      paddingLeft: -4,
-      paddingRight: -4
-    });
+
+    if (windowSize > 1280) {
+      cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
+        paddingLeft: 6,
+        paddingRight: 6
+      });
+    } else if (windowSize > 1024) {
+      cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
+        paddingLeft: 2,
+        paddingRight: 2
+      });
+    } else if (windowSize > 768) {
+      cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
+        paddingLeft: -1,
+        paddingRight: -1
+      });
+    } else {
+      cameraControlsRef.current.fitToBox(projectsGroupRef.current, true, {
+        paddingLeft: -4,
+        paddingRight: -4
+      });
+    }
   };
 
   // Effects

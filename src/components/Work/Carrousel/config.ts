@@ -2,6 +2,7 @@ type TCardConfig = {
   scale: {
     initial: { x: number; y: number };
     hovered: { x: number; y: number };
+    reduced: {x: number, y: number};
   };
   radius: {
     initial: number;
@@ -34,7 +35,8 @@ export function getCardConfig(
   return {
     scale: {
       initial: { x: 8, y: 4.5 },
-      hovered: { x: 12, y: 6.8 }
+      hovered: { x: 12, y: 6.8 },
+      reduced: { x: 4, y: 2.25 }
     },
     radius: {
       initial: 0.25,

@@ -180,12 +180,12 @@ export default function Card({
     if (!isHovered && !isTouchDevice) {
       if (hoveredProject !== null) {
         gsap.to(imgRef.current.scale, {
-          x: 4,
-          y: 2.25,
+          x: cardConfig.scale.reduced.x,
+          y: cardConfig.scale.reduced.y,
           duration: cardConfig.animation.duration,
           ease: cardConfig.animation.ease
         });
-      } else if (isHovered && !isTouchDevice) {
+      } else {
         gsap.to(imgRef.current.scale, {
           x: cardConfig.scale.initial.x,
           y: cardConfig.scale.initial.y,
