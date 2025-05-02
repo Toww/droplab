@@ -53,18 +53,17 @@ export default function ProjectDetails() {
             {project?.type}
           </div>
           {/* Title */}
-          <h1 className="gsap-stagger mt-2 font-getai text-5xl leading-14 wrap-break-word hyphens-auto text-amber-500 md:text-7xl md:leading-18 lg:mt-4">
+
+          <h1 className="gsap-stagger">
             <Balancer ratio={0.5} preferNative={false}>
               {project?.title}
             </Balancer>
           </h1>
           {/* Description */}
           <div className="gsap-stagger mt-8 flex flex-col gap-8 text-stone-700">
-            <p>
-              <Balancer ratio={1} preferNative={false}>
-                {project?.description}
-              </Balancer>
-            </p>
+            <Balancer as="p" ratio={1} preferNative={false}>
+              {project?.description}
+            </Balancer>
             {/* Links */}
             {project.links && project.links.length > 0 && (
               <ProjectLinks links={project.links} />

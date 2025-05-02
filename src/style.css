@@ -23,3 +23,7 @@ body {
   background: white;
   font-family: "Bricolage Grotesque", sans-serif;
 }
+
+h1 {
+  @apply mt-2 font-getai text-5xl leading-14 text-amber-500 md:text-7xl md:leading-18 lg:mt-4
+}

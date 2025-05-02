@@ -45,12 +45,12 @@ export default function ProjectTitle() {
     <div className="pointer-events-none fixed z-40 hidden h-screen w-screen items-center justify-center lg:flex">
       {/* Text block */}
       <div className="z-50 h-fit overflow-hidden p-4">
-        <h1
+        <h2
           ref={projectTitleRef}
           className="pt-4 text-center font-getai text-8xl leading-none text-amber-500 text-shadow-[0_2px_4px_rgb(0_0_0/_0.3)]"
         >
           {hoveredProject?.title}
-        </h1>
+        </h2>
       </div>
     </div>
   );
