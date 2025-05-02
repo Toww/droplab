@@ -9,6 +9,6 @@ void main() {
   // -- Position --
   csm_Position = csm_Position * wobble(csm_Position, uTime, uWobbleFactor);
 
-  // -- Varyings
+  // -- Varyings --
   vUv = uv;
 }

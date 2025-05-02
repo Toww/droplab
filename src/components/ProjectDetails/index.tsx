@@ -45,27 +45,27 @@ export default function ProjectDetails() {
       <div className="mb-12 flex h-full flex-col p-6 lg:mx-auto lg:mb-0 lg:grid lg:max-w-6xl lg:grid-cols-12 lg:gap-x-8 lg:p-0">
         {/* -- Infos -- */}
         <div className="mt-16 flex flex-col lg:sticky lg:top-0 lg:col-span-6 lg:mt-0 lg:h-screen lg:justify-center xl:col-span-5">
-          {/* -- Type --*/}
+          {/* Type */}
           <div
             ref={projectTypeRef}
             className="gsap-stagger font-bricolage text-sm leading-none text-stone-400"
           >
             {project?.type}
           </div>
-          {/* -- Title -- */}
+          {/* Title */}
           <h1 className="gsap-stagger mt-2 font-getai text-5xl leading-14 wrap-break-word hyphens-auto text-amber-500 md:text-7xl md:leading-18 lg:mt-4">
             <Balancer ratio={0.5} preferNative={false}>
               {project?.title}
             </Balancer>
           </h1>
-          {/* -- Description -- */}
+          {/* Description */}
           <div className="gsap-stagger mt-8 flex flex-col gap-8 text-stone-700">
             <p>
               <Balancer ratio={1} preferNative={false}>
                 {project?.description}
               </Balancer>
             </p>
-            {/* -- Links -- */}
+            {/* Links */}
             {project.links && project.links.length > 0 && (
               <ProjectLinks links={project.links} />
             )}

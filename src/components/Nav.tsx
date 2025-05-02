@@ -100,20 +100,20 @@ export default function Nav() {
 
         {/* -- Footer -- */}
         <div className="fixed bottom-6 z-50 flex w-full items-baseline justify-between px-6 font-light">
-          {/* -- Contact */}
+          {/* Contact */}
           <a ref={contactLinkRef} className="leading-0 hover:underline">
             Contact
           </a>
           {/** Status & Tablet / mobile project nav **/}
           {/* Show "hire status" most of the time, and project nav when on tablets /
           mobile and projects page */}
-          {/* -- Status */}
+          {/* Status */}
           <div className={getFooterStatusClasses()}>
             <p>Available for hire</p>
             <div className="size-2 rounded-full bg-green-500"></div>
           </div>
 
-          {/* -- Tablet / Mobile navigation */}
+          {/* -- Tablet / Mobile navigation -- */}
           <div className={getFooterNavClasses()}>
             {previousProject && (
               <div className="w-6 content-center text-amber-500">

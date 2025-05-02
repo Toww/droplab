@@ -130,10 +130,10 @@ export default function CustomOutlet() {
         displayOutlet !== null
       ) {
         if (isDisplayedLocationRefProject && isNextLocationProject) {
-          // -- When current and next locations are projects
+          // When current and next locations are projects
           animateBetweenProjects();
         } else {
-          // -- Entering or leaving projects page
+          // Entering or leaving projects page
           containerFadeOutIn();
           if (!isNextLocationProject) {
             // Hide project navigation if next location isn't a project
@@ -141,7 +141,7 @@ export default function CustomOutlet() {
           }
         }
       } else {
-        // -- Initial render
+        // Initial render
         setDisplayOutlet(currentOutlet);
         containerFadeIn();
         displayedLocationRef.current = location.pathname;

@@ -151,7 +151,7 @@ export default function Card({
   // Frame loop
   useFrame((state) => {
     // Raycasting on every frame insted of on pointer move
-    state.events.update && state.events.update(); // Raycasts every frame rather than on pointer-move
+    state.events.update && state.events.update();
 
     // Card position on scroll
     const targetXPos =
