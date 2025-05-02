@@ -20,7 +20,7 @@ export default function Work() {
 
   // Hooks
   const phase = useAppStore((state) => state.phase);
-  const showPerf = useAppStore((state) => state.showPerf);
+  // const showPerf = useAppStore((state) => state.showPerf);
 
   const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
     const difference = e.touches[0].clientX - lastTouch.current;
