@@ -23,6 +23,7 @@ export default function ProjectImages({
     ) {
       setImagesMarginTop(projectTypeRef.current.getBoundingClientRect().top);
     } else {
+      setImagesMarginTop(0);
     }
   }, [projectTypeRef.current, project.imgFiles, window.innerWidth]);
 
