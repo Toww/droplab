@@ -89,7 +89,7 @@ export default function Carrousel({
             touchOffset={touchOffset}
             projectsLength={projects.length}
             projectsGroupRef={projectsGroupRef}
-            url={`./images/${project.id}/thumbnail.jpg`}
+            url={`/images/${project.id}/thumbnail.jpg`}
           />
         ))}
       </group>
