@@ -154,7 +154,7 @@ export default function CustomOutlet() {
   );
 
   return (
-    <div ref={containerRef} className="pointer-events-none opacity-0">
+    <div ref={containerRef} className="opacity-0">
       {displayOutlet}
     </div>
   );

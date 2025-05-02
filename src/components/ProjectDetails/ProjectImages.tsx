@@ -19,7 +19,7 @@ export default function ProjectImages({
       project.imgFiles &&
       project.imgFiles.length > 1 &&
       projectTypeRef.current &&
-      window.innerWidth >= 1280
+      window.innerWidth >= 1024
     ) {
       setImagesMarginTop(projectTypeRef.current.getBoundingClientRect().top);
     } else {
@@ -45,7 +45,7 @@ export default function ProjectImages({
         return (
           <div
             key={`${project.id}-imgs-${imgLine.join("-")}`}
-            className="grid w-full max-w-full gap-6 md:grid-cols-2"
+            className="grid w-full max-w-full gap-4 md:grid-cols-2"
           >
             {imgLine.map((num) => {
               return (
@@ -66,7 +66,7 @@ export default function ProjectImages({
   return (
     <div
       style={imagesMarginTop ? { marginTop: imagesMarginTop } : undefined}
-      className={`relative mt-8 w-full space-y-6 lg:mt-0 ${project.imgFiles?.length === 1 && "content-center"}`}
+      className={`relative mt-8 flex w-full flex-col gap-6 lg:mt-0 ${project.imgFiles && project.imgFiles.length === 1 && "justify-center"}`}
     >
       {getProjectImages()}
     </div>

@@ -41,8 +41,8 @@ export default function ProjectDetails() {
   };
 
   return (
-    <div className="lg:px-18">
-      <div className="mb-12 flex h-full flex-col p-6 lg:mx-auto lg:mb-0 lg:grid lg:max-w-6xl lg:grid-cols-12 lg:gap-x-6 lg:p-0">
+    <div className="overflow-x-hidden lg:px-18">
+      <div className="mb-12 flex h-full flex-col p-6 lg:mx-auto lg:mb-0 lg:grid lg:max-w-6xl lg:grid-cols-12 lg:gap-x-8 lg:p-0">
         {/* -- Infos -- */}
         <div className="mt-16 flex flex-col lg:sticky lg:top-0 lg:col-span-6 lg:mt-0 lg:h-screen lg:justify-center xl:col-span-5">
           {/* -- Type --*/}
@@ -59,7 +59,7 @@ export default function ProjectDetails() {
             </Balancer>
           </h1>
           {/* -- Description -- */}
-          <div className="gsap-stagger mt-6 space-y-6 text-stone-700">
+          <div className="gsap-stagger mt-8 flex flex-col gap-8 text-stone-700">
             <p>
               <Balancer ratio={1} preferNative={false}>
                 {project?.description}

@@ -7,7 +7,7 @@ type TProps = {
 
 export default function ProjectLinks({ links }: TProps): JSX.Element {
   return (
-    <div className="flex space-x-4">
+    <div className="flex gap-4">
       {links.map((link, index) => (
         <a
           target="_blank"

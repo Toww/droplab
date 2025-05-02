@@ -88,6 +88,7 @@ export default function Card({
     e.stopPropagation();
     if (phase === "ready" && hoveredProject?.id) {
       navigate(`/projects/${hoveredProject?.id}`);
+      document.body.style.cursor = "auto";
       updateHoveredProject(null);
       setIsHovered(false);
     }

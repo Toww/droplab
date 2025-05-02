@@ -18,7 +18,7 @@ export default function About() {
   }, []);
 
   return (
-    <div className="mx-auto grid h-full max-w-6xl grid-cols-12 gap-x-6">
+    <div className="mx-auto grid h-full max-w-6xl grid-cols-12 gap-x-8">
       {/* Infos */}
       <div className="sticky top-0 col-span-5 flex h-screen flex-col justify-center">
         {/* -- Title -- */}
@@ -26,7 +26,7 @@ export default function About() {
           About
         </h1>
         {/* -- Description -- */}
-        <div className="mt-6 space-y-8 text-stone-700">
+        <div className="mt-8 flex flex-col gap-8 text-stone-700">
           <p>
             Hello ! My name is Thomas, I’m a front-end developer with an
             important interest in artistic and creative fields.
@@ -41,7 +41,7 @@ export default function About() {
             about your projects. Feel free to contact me anytime !
           </p>
         </div>
-        <div className="mt-10 flex items-center justify-start space-x-4 text-amber-500">
+        <div className="mt-10 flex items-center justify-start gap-4 text-amber-500">
           <a href="https://github.com/toww" target="_blank">
             <GithubIcon width={34} height={34} fill="currentColor" />
           </a>
