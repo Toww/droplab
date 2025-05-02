@@ -7,16 +7,15 @@ import RouteErrorBoundary from "./RouteErrorBoundary";
 
 export default createBrowserRouter([
   {
-    path:"/",
     Component: Layout,
     ErrorBoundary: RouteErrorBoundary,
     children: [
       {
-        index: true,
+        path:"/",
         Component: Work,
       },
       {
-        path: "projects",
+        path: "/projects",
         children: [
           {
             index: true,
@@ -30,7 +29,7 @@ export default createBrowserRouter([
         ]
       },
       {
-        path: "about",
+        path: "/about",
         Component: About
       }
     ]
