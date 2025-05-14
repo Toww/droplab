@@ -1,24 +1,23 @@
-import { useParams } from "react-router";
 import Balancer from "react-wrap-balancer";
-import { JSX, useEffect, useRef } from "react";
-import ProjectLinks from "./ProjectLinks";
-import ProjectModel from "./ProjectModel";
-import ProjectVideo from "./ProjectVideo";
-import ProjectImages from "./ProjectImages";
 import useAppStore from "@stores/useAppStore";
+import { JSX, useEffect, useRef } from "react";
+import type { Route } from "./+types/ProjectDetails";
+import ProjectLinks from "@components/ProjectDetails/ProjectLinks";
+import ProjectModel from "@components/ProjectDetails/ProjectModel";
+import ProjectVideo from "@components/ProjectDetails/ProjectVideo";
+import ProjectImages from "@components/ProjectDetails/ProjectImages";
 
-export default function ProjectDetails() {
+export default function ProjectDetails({ params }: Route.ComponentProps) {
   // Refs
   const projectTypeRef = useRef<HTMLHeadingElement>(null);
 
   // Hooks
-  const projectID = useParams().pid;
   const projects = useAppStore((state) => state.projects);
   const updateProjectNav = useAppStore((state) => state.updateProjectNav);
 
   // Variables
   const projectIndex = projects.findIndex(
-    (project) => project.id === projectID
+    (project) => project.id === params.pid
   );
   const project = projects[projectIndex];
 
@@ -53,7 +52,6 @@ export default function ProjectDetails() {
             {project?.type}
           </div>
           {/* Title */}
-
           <h1 className="gsap-stagger">
             <Balancer ratio={0.5} preferNative={false}>
               {project?.title}
@@ -71,6 +69,7 @@ export default function ProjectDetails() {
           </div>
         </div>
 
+        {/* Empty column */}
         <div className="hidden xl:col-span-1 xl:block" />
 
         {/* -- Content -- */}
