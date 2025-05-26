@@ -35,17 +35,17 @@ export default function About() {
           {/* Text */}
           <div className="mt-8 flex flex-col gap-8 text-stone-700">
             <Balancer as="p" preferNative={false}>
-              Hello ! My name is Thomas, I’m a front-end developer with an
-              important interest in artistic and creative fields.
+              Hello! My name is Thomas, I’m a front-end developer with a deep
+              interest in artistic and creative fields.
             </Balancer>
             <Balancer as="p" preferNative={false}>
               After years working as a graphic designer, I finally came back to
-              my original passion for coding and take pleasure in working
-              closely with designers.
+              my original passion for coding and enjoy working closely with
+              designers.
             </Balancer>
             <Balancer as="p" preferNative={false}>
-              Human is at the center of my work and I’ll always be happy to talk
-              about your projects. Feel free to contact me anytime !
+              Human is at the center of my work and I’m always happy to talk
+              about your projects. Feel free to contact me anytime!
             </Balancer>
           </div>
           <div className="mt-10 flex items-center justify-start gap-4 text-amber-500">

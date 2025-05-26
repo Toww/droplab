@@ -67,7 +67,7 @@ const projectsList: TProject[] = [
     id: "diploma",
     type: "Graphic design",
     description:
-      "Final diploma thesis (in french) focusing on simplicity and sobriety in graphic design. It focuses on the challenges it represents to bring the light on information and emotion throught simplicity.",
+      "Final diploma thesis (in french), focusing on simplicity and sobriety in graphic design. It focuses on the challenges it represents to bring the light on information and emotion through simplicity.",
     links: [
       {
         url: "/documents/memoire.pdf",
@@ -81,7 +81,7 @@ const projectsList: TProject[] = [
     id: "drop",
     type: "Dev | 3D",
     description:
-      "The website you are visiting, using Typescript, React, React Router, Zustand, Three.js with React Three Fiber and Drei, GSAP and TailwindCSS.",
+      "The website you are visiting, made with Typescript, React, React Router, Zustand, Three.js with React Three Fiber and Drei, GSAP and TailwindCSS.",
     links: [
       {
         url: "https://github.com/Toww/droplab",

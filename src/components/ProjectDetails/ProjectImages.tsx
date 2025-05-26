@@ -13,11 +13,13 @@ export default function ProjectImages({
   // States
   const [imagesMarginTop, setImagesMarginTop] = useState<number>(0);
 
+  // Variables
+  const hasMultipleImages = project.imgFiles && project.imgFiles.length > 1;
+
   // Placing images vertically on desktop
   useEffect(() => {
     if (
-      project.imgFiles &&
-      project.imgFiles.length > 1 &&
+      hasMultipleImages &&
       projectTypeRef.current &&
       window.innerWidth >= 1024
     ) {
@@ -67,7 +69,7 @@ export default function ProjectImages({
   return (
     <div
       style={imagesMarginTop ? { marginTop: imagesMarginTop } : undefined}
-      className={`relative mt-8 flex w-full flex-col gap-6 lg:mt-0 ${project.imgFiles && project.imgFiles.length === 1 && "justify-center"}`}
+      className={`relative mt-8 flex w-full flex-col gap-6 lg:mt-0 ${hasMultipleImages ? "mb-16" : "justify-center"}`}
     >
       {getProjectImages()}
     </div>
