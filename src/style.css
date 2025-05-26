@@ -1,6 +1,3 @@
-/* Google fonts */
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
-
 /* Tailwind */
 @import "tailwindcss";
 
@@ -25,5 +22,5 @@ body {
 }
 
 h1 {
-  @apply mt-2 font-getai text-5xl leading-14 text-amber-500 md:text-7xl md:leading-18 lg:mt-4
+  @apply mt-2 font-getai text-5xl leading-14 text-amber-500 md:text-7xl md:leading-18 lg:mt-4;
 }
