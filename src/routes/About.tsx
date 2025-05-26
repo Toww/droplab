@@ -18,9 +18,9 @@ export default function About() {
         rotation: 3.5,
         y: 10,
         opacity: 1,
-        delay: 0.7,
-        duration: 1.5,
-        ease: "back.out(0.8)"
+        delay: 0.3,
+        duration: 1,
+        ease: "back.out(0.5)"
       }
     );
   }, []);
