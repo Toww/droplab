@@ -1,4 +1,4 @@
-import { gsap } from "gsap";
+import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Nav from "@components/Nav";
 import Debug from "@components/Debug";
