@@ -48,14 +48,6 @@ export default function Nav() {
     return `leading-0 hover:underline ${isActive && "underline"}`;
   };
 
-  const getFooterStatusClasses = () => {
-    const baseClasses = "items-center gap-2 text-xs";
-    const pathClasses = !pathname.includes("projects")
-      ? "flex"
-      : "hidden lg:flex";
-
-    return `${pathClasses} ${baseClasses}`;
-  };
 
   const getFooterNavClasses = () => {
     const baseClasses = "items-center gap-10 text-xs";
@@ -105,13 +97,6 @@ export default function Nav() {
             Contact
           </a>
           {/** Status & Tablet / mobile project nav **/}
-          {/* Show "hire status" most of the time, and project nav when on tablets /
-          mobile and projects page */}
-          {/* Status */}
-          <div className={getFooterStatusClasses()}>
-            <p>Available for hire</p>
-            <div className="size-2 rounded-full bg-green-500"></div>
-          </div>
 
           {/* -- Tablet / Mobile navigation -- */}
           <div className={getFooterNavClasses()}>
